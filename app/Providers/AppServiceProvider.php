@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\LoginInterface;
+use App\Repositories\LoginRepository;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,5 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+        $this->app->bind(LoginInterface::class, LoginRepository::class);
+
     }
 }

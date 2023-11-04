@@ -10,14 +10,22 @@
         <div class="auth-container">
             <div class="card">
                 <header class="auth-header">
-                    <h1 class="auth-title">{{ config('app.name') }} Login</h1>
+                    <h1 class="auth-title">{{ config('app.name') }} Register</h1>
                 </header>
                 <div class="auth-content">
                     @if (session('error'))
                         <div class="alert alert-danger">{{ session('error') }}</div>
                     @endif
-                    <form id="login-form" action="{{ route('login_req') }}" method="POST" novalidate="">
+                    <form id="login-form" action="{{ route('register_req') }}" method="POST" novalidate="">
                         @csrf
+                        <div class="form-group">
+                            <label for="username">Name</label>
+                            <input type="text" class="form-control underlined" value="{{ old('name') }}"
+                                name="name" id="username" placeholder="Your Name" required>
+                        </div>
+                        @error('name')
+                            <p class="alert alert-danger">{{ $message }}</p>
+                        @enderror
                         <div class="form-group">
                             <label for="username">Email</label>
                             <input type="email" class="form-control underlined" value="{{ old('email') }}"
@@ -38,8 +46,8 @@
                             <button type="submit" class="btn btn-block btn-primary">Login</button>
                         </div>
                         <div class="form-group">
-                            <p class="text-muted text-center">Do not have an account?
-                                <a href="{{ route('register') }}">Sign Up!</a>
+                            <p class="text-muted text-center">I have an account?
+                                <a href="{{ route('login') }}">Sign In!</a>
                             </p>
                         </div>
                     </form>
