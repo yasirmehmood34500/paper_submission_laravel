@@ -2,7 +2,7 @@
 @section('content')
     <section class="section">
         <div class="row sameheight-container">
-            <div class="col col-12 col-sm-12 col-md-6 col-xl-5 stats-col">
+            {{-- <div class="col col-12 col-sm-12 col-md-6 col-xl-5 stats-col">
                 <div class="card sameheight-item stats" data-exclude="xs">
                     <div class="card-block">
                         <div class="title-block">
@@ -89,8 +89,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col col-12 col-sm-12 col-md-6 col-xl-7 history-col">
+            </div> --}}
+            {{-- <div class="col col-12 col-sm-12 col-md-6 col-xl-7 history-col">
                 <div class="card sameheight-item" data-exclude="xs" id="dashboard-history">
                     <div class="card-header card-header-sm bordered">
                         <div class="header-block">
@@ -120,11 +120,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </section>
     <section class="section">
-        <div class="row sameheight-container">
+        {{-- <div class="row sameheight-container">
             <div class="col-xl-8">
                 <div class="card sameheight-item items" data-exclude="xs,sm,lg">
                     <div class="card-header bordered">
@@ -388,10 +388,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </section>
     <section class="section map-tasks">
-        <div class="row sameheight-container">
+        {{-- <div class="row sameheight-container">
             <div class="col-md-8">
                 <div class="card sameheight-item" data-exclude="xs,sm">
                     <div class="card-header">
@@ -988,6 +988,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </section>
 @endsection

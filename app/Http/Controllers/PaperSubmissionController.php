@@ -1,0 +1,117 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Interfaces\AuthorContributorInterface;
+use App\Interfaces\AuthorContributorRuleInterface;
+use App\Interfaces\PaperSubmissionInterface;
+use App\Interfaces\SubmissionFileInterface;
+use App\Interfaces\SubmissionFileTypeInterface;
+use Illuminate\Http\Request;
+
+class PaperSubmissionController extends Controller
+{
+	public function __construct(
+		protected PaperSubmissionInterface $paper_submission_interface,
+		protected SubmissionFileInterface $submission_file_interface,
+		protected AuthorContributorInterface $author_contributor_interface,
+		protected AuthorContributorRuleInterface $author_contributor_rule_interface,
+		protected SubmissionFileTypeInterface $submission_file_type_interface
+	) {
+		//
+	}
+	public function submission_1()
+	{
+		return view('pages.submission.submission1')->with([
+			'meta_title' => 'Submission Step 1',
+		]);
+	}
+	public function submission_2()
+	{
+		if (!session()->has('paper_submission_id')) {
+			return redirect()->route('submission_step_1');
+		}
+		return view('pages.submission.submission2')->with([
+			'meta_title' => 'Submission Step 2',
+			'submission_paper' => $this->paper_submission_interface->paper_get_by_id(session('paper_submission_id'))
+		]);
+	}
+	public function submission_3()
+	{
+		if (!session()->has('paper_submission_id')) {
+			return redirect()->route('submission_step_1');
+		}
+		return view('pages.submission.submission3')->with([
+			'meta_title' => 'Submission Step 3',
+			'paper_contributors' => $this->author_contributor_interface->get_by_paper_id(session('paper_submission_id')),
+			'contributor_rules' => $this->author_contributor_rule_interface->all(),
+		]);
+	}
+	public function submission_4()
+	{
+		if (!session()->has('paper_submission_id')) {
+			return redirect()->route('submission_step_1');
+		}
+		return view('pages.submission.submission4')->with([
+			'meta_title' => 'Submission Step 4',
+			'paper_files' => $this->submission_file_interface->get_by_paper_id(session('paper_submission_id')),
+			'paper_file_types' => $this->submission_file_type_interface->all(),
+		]);
+	}
+
+	public function my_submission($in_draft = 0)
+	{
+		return view('pages.paper.view')->with([
+			'meta_title' => 'My Submission',
+			'my_submissions' => $this->paper_submission_interface->my_submission($in_draft),
+		]);
+	}
+
+	public function view_paper_detail($id)
+	{
+		$paper = $this->paper_submission_interface->paper_detail_get_by_id($id);
+		if (!$paper) {
+			return back();
+		}
+		return view('pages.paper.detail')->with([
+			'meta_title' => 'Paper Detail',
+			'paper' => $paper,
+			'paper_contributors' => $this->author_contributor_interface->get_by_paper_id($paper->id),
+			'paper_files' => $this->submission_file_interface->get_by_paper_id($paper->id),
+		]);
+	}
+	public function continue_draft($id)
+	{
+		$paper = $this->paper_submission_interface->continue_draft($id);
+		if ($paper) {
+			session(['paper_submission_id' => $paper->id]);
+			return redirect()->route('submission_step_2');
+		} else {
+			return back();
+		}
+	}
+
+
+
+	public function submission_1_req(Request $request)
+	{
+		session(['paper_submission_id' => 0]);
+		return redirect()->route('submission_step_2');
+	}
+	public function submission_2_req(Request $request)
+	{
+		$paper = $this->paper_submission_interface->create_update_paper_with_id($request, session('paper_submission_id'));
+		session(['paper_submission_id' => $paper->id]);
+		return redirect()->route('submission_step_3');
+	}
+	public function submission_3_req(Request $request)
+	{
+		return redirect()->route('submission_step_4');
+	}
+	public function submission_4_req(Request $request)
+	{
+		$this->paper_submission_interface->submit_update_paper_with_id($request, session('paper_submission_id'));
+		session()->forget('paper_submission_id');
+		return redirect()->route('submission_step_1');
+	}
+}

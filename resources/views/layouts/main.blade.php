@@ -3,6 +3,7 @@
 
 <head>
     @include('includes.css')
+    @yield('css')
 </head>
 
 <body>
@@ -21,6 +22,7 @@
     </div>
     @include('includes.primary-color')
     @include('includes.js')
+    @yield('js')
 </body>
 
 </html>
