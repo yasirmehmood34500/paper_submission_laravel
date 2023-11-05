@@ -36,6 +36,22 @@
 
                     </ul>
                 </li>
+                @if (auth()->user()->user_level == 1)
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-th-large"></i> Authors
+                            <i class="fa arrow"></i>
+                        </a>
+                        <ul class="sidebar-nav">
+                            <li>
+                                <a href="{{ route('view_author_page') }}"> View </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('add_author_page') }}"> Add </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
                 {{-- <li>
                     <a href="forms.html">
                         <i class="fa fa-pencil-square-o"></i> Forms </a>

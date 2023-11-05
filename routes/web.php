@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthorContributorController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaperSubmissionController;
 use App\Http\Controllers\SubmissionFileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,6 +51,12 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('file')->controller(SubmissionFileController::class)->group(function () {
         Route::post('upload', 'upload_file')->name('upload_file');
         Route::get('delete/{id}', 'delete_file')->name('delete_file');
+    });
+
+    Route::prefix('author')->controller(UserController::class)->group(function () {
+        Route::get('view', 'view_author')->name('view_author_page');
+        Route::get('add', 'add_author_page')->name('add_author_page');
+        Route::post('add', 'add_author_req')->name('add_author_req');
     });
 });
 

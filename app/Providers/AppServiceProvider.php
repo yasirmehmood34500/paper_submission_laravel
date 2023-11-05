@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Interfaces\UserInterface;
 use App\Interfaces\LoginInterface;
+use App\Repositories\UserRepository;
 use App\Repositories\LoginRepository;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -39,5 +41,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PaperSubmissionInterface::class, PaperSubmissionRepository::class);
         $this->app->bind(SubmissionFileInterface::class, SubmissionFileRepository::class);
         $this->app->bind(SubmissionFileTypeInterface::class, SubmissionFileTypeRepository::class);
+        $this->app->bind(UserInterface::class, UserRepository::class);
     }
 }
