@@ -27,7 +27,13 @@
                         <li>
                             <a href="{{ route('my_submission') }}"> Sended </a>
                         </li>
-                        
+                        @if (auth()->user()->user_level == 1)
+                            <li>
+                                <a href="{{ route('all_submissions_page') }}"> Received </a>
+                            </li>
+                        @endif
+
+
                     </ul>
                 </li>
                 {{-- <li>

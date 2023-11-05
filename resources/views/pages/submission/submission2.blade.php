@@ -11,7 +11,7 @@
 @endsection
 @section('content')
     <section class="section">
-        <h4>Submission Metadata</h4>
+        <h4>Submission Metadata ({{ @$submission_paper?->paper_no }})</h4>
         <form action="{{ route('submission_step_2_req') }}" method="post">
             @csrf
             <input type="hidden" name="paper_no" value="{{ @$submission_paper?->paper_no ?: 'none' }}">

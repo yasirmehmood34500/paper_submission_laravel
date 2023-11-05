@@ -36,6 +36,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('view-paper/{id}', 'view_paper_detail')->name('view_paper_detail');
         Route::get('view/{in_draft?}', 'my_submission')->name('my_submission');
         Route::get('continue-draft/{id}', 'continue_draft')->name('continue_draft');
+
+
+        Route::get('all_submissions', 'all_submissions_page')->name('all_submissions_page');
     });
 
 
@@ -44,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('delete/{id}', 'delete_contributor')->name('delete_contributor');
     });
 
-    Route::prefix('file')->controller(SubmissionFileController::class)->group(function(){
+    Route::prefix('file')->controller(SubmissionFileController::class)->group(function () {
         Route::post('upload', 'upload_file')->name('upload_file');
         Route::get('delete/{id}', 'delete_file')->name('delete_file');
     });

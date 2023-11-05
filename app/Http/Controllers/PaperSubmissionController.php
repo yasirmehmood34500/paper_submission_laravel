@@ -7,7 +7,9 @@ use App\Interfaces\AuthorContributorRuleInterface;
 use App\Interfaces\PaperSubmissionInterface;
 use App\Interfaces\SubmissionFileInterface;
 use App\Interfaces\SubmissionFileTypeInterface;
+use App\Mail\PaperSubmissionEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PaperSubmissionController extends Controller
 {
@@ -31,9 +33,13 @@ class PaperSubmissionController extends Controller
 		if (!session()->has('paper_submission_id')) {
 			return redirect()->route('submission_step_1');
 		}
+		$paper = $this->paper_submission_interface->paper_get_by_id(session('paper_submission_id'));
+		if (!$paper && session('paper_submission_id') != 0) {
+			return redirect()->route('submission_step_1');
+		}
 		return view('pages.submission.submission2')->with([
 			'meta_title' => 'Submission Step 2',
-			'submission_paper' => $this->paper_submission_interface->paper_get_by_id(session('paper_submission_id'))
+			'submission_paper' => $paper
 		]);
 	}
 	public function submission_3()
@@ -41,10 +47,15 @@ class PaperSubmissionController extends Controller
 		if (!session()->has('paper_submission_id')) {
 			return redirect()->route('submission_step_1');
 		}
+		$paper = $this->paper_submission_interface->paper_get_by_id(session('paper_submission_id'));
+		if (!$paper) {
+			return redirect()->route('submission_step_1');
+		}
 		return view('pages.submission.submission3')->with([
 			'meta_title' => 'Submission Step 3',
 			'paper_contributors' => $this->author_contributor_interface->get_by_paper_id(session('paper_submission_id')),
 			'contributor_rules' => $this->author_contributor_rule_interface->all(),
+			'submission_paper' => $paper
 		]);
 	}
 	public function submission_4()
@@ -52,10 +63,15 @@ class PaperSubmissionController extends Controller
 		if (!session()->has('paper_submission_id')) {
 			return redirect()->route('submission_step_1');
 		}
+		$paper = $this->paper_submission_interface->paper_get_by_id(session('paper_submission_id'));
+		if (!$paper) {
+			return redirect()->route('submission_step_1');
+		}
 		return view('pages.submission.submission4')->with([
 			'meta_title' => 'Submission Step 4',
 			'paper_files' => $this->submission_file_interface->get_by_paper_id(session('paper_submission_id')),
 			'paper_file_types' => $this->submission_file_type_interface->all(),
+			'submission_paper' => $paper
 		]);
 	}
 
@@ -110,8 +126,17 @@ class PaperSubmissionController extends Controller
 	}
 	public function submission_4_req(Request $request)
 	{
-		$this->paper_submission_interface->submit_update_paper_with_id($request, session('paper_submission_id'));
+		$paper = $this->paper_submission_interface->submit_update_paper_with_id($request, session('paper_submission_id'));
 		session()->forget('paper_submission_id');
-		return redirect()->route('submission_step_1');
+		Mail::to(auth()->user()->email)->send(new PaperSubmissionEmail($paper->paper_no));
+		return redirect()->route('my_submission');
+	}
+
+	public function all_submissions_page()
+	{
+		return view('pages.paper.view')->with([
+			'meta_title' => 'All Submissioin',
+			'my_submissions' => $this->paper_submission_interface->all_submissions(),
+		]);
 	}
 }

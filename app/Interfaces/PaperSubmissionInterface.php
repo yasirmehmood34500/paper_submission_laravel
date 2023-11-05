@@ -10,4 +10,5 @@ interface PaperSubmissionInterface
 	public function my_submission($in_draft);
 	public function continue_draft($id);
 	public function paper_detail_get_by_id($id);
+	public function all_submissions();
 }

@@ -17,7 +17,7 @@
     <section class="section">
         <div class="row">
             <div class="col-md-6">
-                <h4>Author Contributor</h4>
+                <h4>Author Contributor ({{ @$submission_paper?->paper_no }})</h4>
             </div>
             <div class="col-md-6">
                 <button class="pull-right btn btn-success" id="add_contributor">Add Contributor +</button>

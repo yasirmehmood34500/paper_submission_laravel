@@ -10,17 +10,17 @@
     <section class="section">
         <div class="row">
             <div class="col-md-6">
-                <h4>Upload Files</h4>
+                <h4>Upload Files ({{ @$submission_paper?->paper_no }})</h4>
             </div>
             <div class="col-md-6">
                 <button class="pull-right btn btn-success" id="upload_btn">Upload Files +</button>
             </div>
         </div>
         <div class="new_file_upload d_none">
-            <form action="{{ route('upload_file') }}" method="post" enctype="multipart/form">
+            <form action="{{ route('upload_file') }}" method="post" enctype="multipart/form-data">
                 @csrf
-                <label for="">FIle Name</label>
-                <input type="text" name="file_name" required="" class="form-control">
+                <label for="">Choose File</label>
+                <input type="file" name="file_name" required="" class="form-control">
                 <label for="">Select File Type</label>
                 <select name="submission_file_type_id" id="" class="form-control">
                     @foreach ($paper_file_types as $paper_file_type)
@@ -40,7 +40,8 @@
                     </tr>
                     @foreach ($paper_files as $paper_file)
                         <tr>
-                            <td>{{ $paper_file->file_type->name }}</td>
+                            <td><a href="{{ asset('storage/uploads/submission') }}/{{ $paper_file->file_name }}"
+                                    download="">{{ $paper_file->file_type->name }}</a></td>
                             <td><a href="{{ route('delete_file', ['id' => $paper_file->id]) }}"
                                     class="btn btn-danger">Remove</a></td>
                         </tr>

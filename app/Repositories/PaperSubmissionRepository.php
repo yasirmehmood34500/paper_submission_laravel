@@ -39,14 +39,22 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 	}
 	public function my_submission($in_draft)
 	{
-		return $this->paper_submission_model->where('in_draft', $in_draft)->where('user_id', auth()->id())->get();
+		return $this->paper_submission_model->where('in_draft', $in_draft)->where('user_id', auth()->id())->orderBy('id', 'DESC')->get();
 	}
 	public function continue_draft($id)
 	{
-		return $this->paper_submission_model->where('in_draft', 1)->where('user_id', auth()->id())->first();
+		return $this->paper_submission_model->where('in_draft', 1)->where('user_id', auth()->id())->where('id', $id)->first();
 	}
 	public function paper_detail_get_by_id($id)
 	{
-		return $this->paper_submission_model->where('in_draft', 0)->where('user_id', auth()->id())->where('id', $id)->first();
+		$paper = $this->paper_submission_model->where('in_draft', 0);
+		if (auth()->user()->user_level != 1) {
+			$paper = $paper->where('user_id', auth()->id());
+		}
+		return $paper->where('id', $id)->first();
+	}
+	public function all_submissions()
+	{
+		return $this->paper_submission_model->where('in_draft', 0)->orderBy('id', 'DESC')->get();
 	}
 }

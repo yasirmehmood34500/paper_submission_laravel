@@ -37,7 +37,7 @@ class LoginRepository implements LoginInterface
 		if ($already_registered) {
 			return [false, 'Email already registered'];
 		}
-		$request['user_level'] = 0;
+		$request['user_level'] = 2;
 		$user=$this->user_model->create($request->except('_token'));
 		Auth::login($user);
 		return [true, 'Registration Successfully'];

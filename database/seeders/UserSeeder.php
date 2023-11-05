@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'name' => 'Super Admin',
-                'email' => 'admin@example.com',
+                'email' => 'admin@gmail.com',
                 'password' => '12345678',
                 'email_verified_at' => date('Y-m-d H:i:s'),
                 'user_level' => 1
