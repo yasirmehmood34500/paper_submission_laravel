@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Super Admin',
                 'email' => 'admin@gmail.com',
-                'password' => '12345678',
+                'password' => 'worldcup',
                 'email_verified_at' => date('Y-m-d H:i:s'),
                 'user_level' => 1
             ]
