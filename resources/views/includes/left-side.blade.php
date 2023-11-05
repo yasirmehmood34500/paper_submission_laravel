@@ -18,18 +18,20 @@
                         <i class="fa arrow"></i>
                     </a>
                     <ul class="sidebar-nav">
-                        <li>
-                            <a href="{{ route('submission_step_1') }}"> New </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('my_submission', ['in_draft' => 1]) }}"> Draft </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('my_submission') }}"> Sended </a>
-                        </li>
+
                         @if (auth()->user()->user_level == 1)
                             <li>
                                 <a href="{{ route('all_submissions_page') }}"> Received </a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="{{ route('submission_step_1') }}"> New </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('my_submission', ['in_draft' => 1]) }}"> Draft </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('my_submission') }}"> Sended </a>
                             </li>
                         @endif
 
@@ -60,7 +62,7 @@
                             <i class="fa fa-pencil-square-o"></i> File Type </a>
                     </li>
                 @endif
-                
+
             </ul>
         </nav>
     </div>
