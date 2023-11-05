@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthorContributorController;
+use App\Http\Controllers\AuthorContributorRuleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaperSubmissionController;
 use App\Http\Controllers\SubmissionFileController;
+use App\Http\Controllers\SubmissionFileTypeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +48,16 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('contributor')->controller(AuthorContributorController::class)->group(function () {
         Route::post('add', 'add_contributor')->name('add_contributor');
         Route::get('delete/{id}', 'delete_contributor')->name('delete_contributor');
+    });
+
+    Route::prefix('contributor-rule')->controller(AuthorContributorRuleController::class)->group(function () {
+        Route::get('view', 'view')->name('contributor_rule_page');
+        Route::post('add', 'add')->name('add_contributor_rule');
+    });
+
+    Route::prefix('file-type')->controller(SubmissionFileTypeController::class)->group(function () {
+        Route::get('view', 'view')->name('file_type_page');
+        Route::post('add', 'add')->name('add_file_type');
     });
 
     Route::prefix('file')->controller(SubmissionFileController::class)->group(function () {

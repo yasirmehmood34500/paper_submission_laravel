@@ -51,11 +51,16 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="{{ route('contributor_rule_page') }}">
+                            <i class="fa fa-pencil-square-o"></i> Contributor Rule </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('file_type_page') }}">
+                            <i class="fa fa-pencil-square-o"></i> File Type </a>
+                    </li>
                 @endif
-                {{-- <li>
-                    <a href="forms.html">
-                        <i class="fa fa-pencil-square-o"></i> Forms </a>
-                </li> --}}
+                
             </ul>
         </nav>
     </div>

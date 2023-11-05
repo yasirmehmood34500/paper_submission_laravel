@@ -5,4 +5,5 @@ namespace App\Interfaces;
 interface AuthorContributorRuleInterface
 {
 	public function all();
+	public function add($request);
 }

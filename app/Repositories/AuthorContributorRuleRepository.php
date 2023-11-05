@@ -15,4 +15,12 @@ class AuthorContributorRuleRepository implements AuthorContributorRuleInterface
 	{
 		return $this->author_contributor_rule_model->get();
 	}
+	public function add($request)
+	{
+		$this->author_contributor_rule_model->updateOrCreate(
+			['name' => $request['name']],
+			['name' => $request['name']]
+		);
+		return true;
+	}
 }

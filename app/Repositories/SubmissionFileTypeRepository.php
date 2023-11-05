@@ -15,4 +15,12 @@ class SubmissionFileTypeRepository implements SubmissionFileTypeInterface
 	{
 		return $this->submission_file_type_model->get();
 	}
+	public function add($request)
+	{
+		$this->submission_file_type_model->updateOrCreate(
+			['name' => $request['name']],
+			['name' => $request['name']]
+		);
+		return true;
+	}
 }
