@@ -21,7 +21,7 @@
                         <div class="form-group">
                             <label for="username">Name</label>
                             <input type="text" class="form-control underlined" value="{{ old('name') }}"
-                                name="name" id="username" placeholder="Your Name" required>
+                                name="name" placeholder="Your Name" required>
                         </div>
                         @error('name')
                             <p class="alert alert-danger">{{ $message }}</p>
@@ -29,14 +29,14 @@
                         <div class="form-group">
                             <label for="username">Email</label>
                             <input type="email" class="form-control underlined" value="{{ old('email') }}"
-                                name="email" id="username" placeholder="Your email address" required>
+                                name="email" placeholder="Your email address" required>
                         </div>
                         @error('email')
                             <p class="alert alert-danger">{{ $message }}</p>
                         @enderror
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control underlined" name="password" id="password"
+                            <input type="password" class="form-control underlined" name="password"
                                 placeholder="Your password" value="{{ old('password') }}" required>
                         </div>
                         @error('password')
