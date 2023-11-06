@@ -12,6 +12,9 @@
             <table class="table table-striped">
                 <tr>
                     <th>Paper no</th>
+                    @if (auth()->user()->user_level == 1)
+                        <th>Email</th>
+                    @endif
                     <th>Title</th>
                     <th>Status</th>
                     <th>Start Date</th>
@@ -22,12 +25,15 @@
                         <td>
                             @if ($my_submission->in_draft)
                                 <a
-                                    href="{{ route('continue_draft', ['id' => $my_submission->id]) }}">{{ $my_submission->paper_no }}</a>
+                                    href="{{ route('continue_draft', ['id' => $my_submission->id]) }}"><b>{{ $my_submission->paper_no }}</b></a>
                             @else
                                 <a
-                                    href="{{ route('view_paper_detail', ['id' => $my_submission->id]) }}">{{ $my_submission->paper_no }}</a>
+                                    href="{{ route('view_paper_detail', ['id' => $my_submission->id]) }}"><b>{{ $my_submission->paper_no }}</b></a>
                             @endif
                         </td>
+                        @if (auth()->user()->user_level == 1)
+                            <td>{{ @$my_submission?->user?->email }}</td>
+                        @endif
                         <td>{{ $my_submission->title }}</td>
                         <td>
                             @if ($my_submission->in_draft)

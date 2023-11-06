@@ -55,6 +55,6 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 	}
 	public function all_submissions()
 	{
-		return $this->paper_submission_model->where('in_draft', 0)->orderBy('id', 'DESC')->get();
+		return $this->paper_submission_model->with('user')->where('in_draft', 0)->orderBy('id', 'DESC')->get();
 	}
 }
