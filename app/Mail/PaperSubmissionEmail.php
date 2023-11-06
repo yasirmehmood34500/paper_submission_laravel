@@ -29,7 +29,7 @@ class PaperSubmissionEmail extends Mailable
     {
         return new Envelope(
             // subject: $this->emailTitle,
-            subject: "Paper Submissioin (" . $this->emailBody . ")",
+            subject: "Paper Submission (" . $this->emailBody . ")",
         );
     }
 
