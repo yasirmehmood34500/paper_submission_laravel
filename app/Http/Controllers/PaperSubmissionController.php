@@ -128,7 +128,7 @@ class PaperSubmissionController extends Controller
 	{
 		$paper = $this->paper_submission_interface->submit_update_paper_with_id($request, session('paper_submission_id'));
 		session()->forget('paper_submission_id');
-		Mail::to(auth()->user()->email)->send(new PaperSubmissionEmail($paper->paper_no));
+		Mail::to(auth()->user()->email)->send(new PaperSubmissionEmail($paper->paper_no, $paper->title, auth()->user()->name));
 		return redirect()->route('my_submission');
 	}
 

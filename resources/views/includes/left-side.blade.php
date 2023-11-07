@@ -2,7 +2,7 @@
     <div class="sidebar-container">
         <div class="sidebar-header">
             <div class="brand">
-                {{ config('app.name') }}
+                {{ config('constants.journal_stand_for') }}
                 {{ auth()->user()->user_level == 1 ? 'Admin' : (auth()->user()->user_level == 2 ? 'Author' : 'Reviewer') }}
             </div>
         </div>

@@ -13,11 +13,13 @@ class PaperSubmissionEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $emailBody;
+    public $paper_no, $title, $name;
 
-    public function __construct($body)
+    public function __construct($paper_no, $title, $name)
     {
-        $this->emailBody = $body;
+        $this->paper_no = $paper_no;
+        $this->title = $title;
+        $this->name = $name;
     }
     /**
      * Create a new message instance.
@@ -28,8 +30,7 @@ class PaperSubmissionEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            // subject: $this->emailTitle,
-            subject: "Paper Submission (" . $this->emailBody . ")",
+            subject: "Acknowledgement Paper (" . $this->paper_no . ")",
         );
     }
 
@@ -44,7 +45,9 @@ class PaperSubmissionEmail extends Mailable
         return new Content(
             view: 'pages.email-template.paper-submission',
             with: [
-                'paper_no' => $this->emailBody,
+                'paper_no' => $this->paper_no,
+                'name' => $this->name,
+                'title' => $this->title,
             ],
         );
     }

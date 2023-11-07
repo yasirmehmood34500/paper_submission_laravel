@@ -10,7 +10,7 @@
         <div class="auth-container">
             <div class="card">
                 <header class="auth-header">
-                    <h1 class="auth-title">{{ config('app.name') }} Register</h1>
+                    <h1 class="auth-title">{{ config('constants.journal_stand_for') }} Register</h1>
                 </header>
                 <div class="auth-content">
                     @if (session('error'))
