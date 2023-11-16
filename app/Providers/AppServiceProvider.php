@@ -16,8 +16,15 @@ use App\Interfaces\SubmissionFileTypeInterface;
 use App\Repositories\PaperSubmissionRepository;
 use App\Repositories\AuthorContributorRepository;
 use App\Interfaces\AuthorContributorRuleInterface;
+use App\Interfaces\RoleInterface;
+use App\Interfaces\RoleUserInterface;
+use App\Interfaces\SubmissionRequirementInterface;
+use App\Models\SubmissionRequirement;
 use App\Repositories\SubmissionFileTypeRepository;
 use App\Repositories\AuthorContributorRuleRepository;
+use App\Repositories\RoleRepository;
+use App\Repositories\RoleUserRepository;
+use App\Repositories\SubmissionRequirementRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -42,5 +49,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SubmissionFileInterface::class, SubmissionFileRepository::class);
         $this->app->bind(SubmissionFileTypeInterface::class, SubmissionFileTypeRepository::class);
         $this->app->bind(UserInterface::class, UserRepository::class);
+        $this->app->bind(SubmissionRequirementInterface::class, SubmissionRequirementRepository::class);
+        $this->app->bind(RoleInterface::class, RoleRepository::class);
+        $this->app->bind(RoleUserInterface::class, RoleUserRepository::class);
     }
 }

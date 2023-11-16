@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(AuthorContributorRuleSeeder::class);
         $this->call(SubmissionFileTypeSeeder::class);
+        $this->call(SubmissionRequirementSeeder::class);
+        $this->call(RoleSeeder::class);
     }
 }

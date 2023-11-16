@@ -4,8 +4,10 @@ use App\Http\Controllers\AuthorContributorController;
 use App\Http\Controllers\AuthorContributorRuleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaperSubmissionController;
+use App\Http\Controllers\RoleUserController;
 use App\Http\Controllers\SubmissionFileController;
 use App\Http\Controllers\SubmissionFileTypeController;
+use App\Http\Controllers\SubmissionRequirementController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +71,23 @@ Route::middleware(['auth'])->group(function () {
         Route::get('view', 'view_author')->name('view_author_page');
         Route::get('add', 'add_author_page')->name('add_author_page');
         Route::post('add', 'add_author_req')->name('add_author_req');
+    });
+
+    Route::prefix('reviewer')->controller(UserController::class)->group(function () {
+        Route::get('view', 'view_reviewer')->name('view_reviewer_page');
+        Route::get('add', 'add_reviewer_page')->name('add_reviewer_page');
+        Route::post('add', 'add_reviewer_req')->name('add_reviewer_req');
+    });
+
+    Route::prefix('assign-permission')->controller(RoleUserController::class)->group(function () {
+        Route::get('view/{user_id}', 'view_user_permission')->name('view_user_permission_page');
+        Route::post('add', 'add_user_permission_req')->name('add_user_permission_req');
+    });
+
+    Route::prefix('submission-requirement')->controller(SubmissionRequirementController::class)->group(function () {
+        Route::get('view', 'view')->name('view_submissioin_requirement_page');
+        Route::get('delete/{id}', 'delete')->name('delete_submissioin_requirement');
+        Route::post('view', 'create')->name('create_submissioin_requirement');
     });
 });
 

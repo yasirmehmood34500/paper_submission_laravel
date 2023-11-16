@@ -3,11 +3,12 @@
 namespace App\Repositories;
 
 use App\Interfaces\UserInterface;
+use App\Models\Role;
 use App\Models\User;
 
 class UserRepository implements UserInterface
 {
-	public function __construct(protected User $user_model)
+	public function __construct(protected User $user_model, protected Role $role_model)
 	{
 		// Your constructor code here
 	}
@@ -17,11 +18,16 @@ class UserRepository implements UserInterface
 	}
 	public function create($request)
 	{
-		$request['user_level'] = 2;
-		$this->user_model->updateOrCreate(
+		$user = $this->user_model->updateOrCreate(
 			['email' => $request['email']],
 			$request->except('_token')
 		);
+		$roles = $this->role_model->where('user_level', $request->user_level)->get()->pluck("id");
+		$user->roles()->sync($roles);
 		return true;
+	}
+	public function single($id)
+	{
+		return $this->user_model->with('roles')->where('id', $id)->first();
 	}
 }

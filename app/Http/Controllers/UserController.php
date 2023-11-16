@@ -3,29 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\UserInterface;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-	public function __construct(protected UserInterface $user_interface){
-	 //
+	public function __construct(protected UserInterface $user_interface)
+	{
+		//
 	}
 
-	public function view_author(){
+	public function view_author()
+	{
 		return view('pages.author.view')->with([
 			'meta_title' => 'Authors',
-			'author_users' => $this->user_interface->view_user_by_level(2),
+			'author_users' => $this->user_interface->view_user_by_level(User::AUTHOR),
 		]);
 	}
 
-	public function add_author_page(){
+	public function add_author_page()
+	{
 		return view('pages.author.add')->with([
 			'meta_title' => 'Add Author',
 		]);
 	}
 
-	public function add_author_req(Request $request){
+	public function add_author_req(Request $request)
+	{
 		$this->user_interface->create($request);
 		return redirect()->route('view_author_page');
+	}
+
+	public function view_reviewer()
+	{
+		return view('pages.reviewer.view')->with([
+			'meta_title' => 'Reviewers',
+			'reviewer_users' => $this->user_interface->view_user_by_level(User::REVIEWER),
+		]);
+	}
+
+	public function add_reviewer_page()
+	{
+		return view('pages.reviewer.add')->with([
+			'meta_title' => 'Add Reviewer',
+		]);
+	}
+
+	public function add_reviewer_req(Request $request)
+	{
+		$this->user_interface->create($request);
+		return redirect()->route('view_reviewer_page');
 	}
 }

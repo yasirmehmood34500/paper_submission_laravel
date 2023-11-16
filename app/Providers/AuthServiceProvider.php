@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\Role;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schema;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +25,14 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (Schema::hasTable("roles")) {
+            $roles = Role::get();
+            foreach ($roles as $role) {
+                $roleKey = $role->key;
+                Gate::define($roleKey, function ($user) use ($roleKey) {
+                    return $user->roles->contains('key', $roleKey) || $user->user_level == 1;
+                });
+            }
+        }
     }
 }

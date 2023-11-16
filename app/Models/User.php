@@ -45,4 +45,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public const ADMIN = 1;
+    public const AUTHOR = 2;
+    public const REVIEWER = 3;
+
+    public const USER_TYPE=['','Admin','Author','Reviewer'];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }

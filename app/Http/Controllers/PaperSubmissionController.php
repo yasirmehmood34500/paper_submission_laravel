@@ -7,6 +7,7 @@ use App\Interfaces\AuthorContributorRuleInterface;
 use App\Interfaces\PaperSubmissionInterface;
 use App\Interfaces\SubmissionFileInterface;
 use App\Interfaces\SubmissionFileTypeInterface;
+use App\Interfaces\SubmissionRequirementInterface;
 use App\Mail\PaperSubmissionEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -18,14 +19,17 @@ class PaperSubmissionController extends Controller
 		protected SubmissionFileInterface $submission_file_interface,
 		protected AuthorContributorInterface $author_contributor_interface,
 		protected AuthorContributorRuleInterface $author_contributor_rule_interface,
-		protected SubmissionFileTypeInterface $submission_file_type_interface
+		protected SubmissionFileTypeInterface $submission_file_type_interface,
+		protected SubmissionRequirementInterface $submission_requirement_interface
 	) {
 		//
 	}
 	public function submission_1()
 	{
+		$this->authorize('new_paper_submission');
 		return view('pages.submission.submission1')->with([
 			'meta_title' => 'Submission Step 1',
+			'submission_requirements' => $this->submission_requirement_interface->view()
 		]);
 	}
 	public function submission_2()
