@@ -34,6 +34,7 @@ class PaperSubmissionController extends Controller
 	}
 	public function submission_2()
 	{
+		$this->authorize('new_paper_submission');
 		if (!session()->has('paper_submission_id')) {
 			return redirect()->route('submission_step_1');
 		}
@@ -48,6 +49,7 @@ class PaperSubmissionController extends Controller
 	}
 	public function submission_3()
 	{
+		$this->authorize('new_paper_submission');
 		if (!session()->has('paper_submission_id')) {
 			return redirect()->route('submission_step_1');
 		}
@@ -64,6 +66,7 @@ class PaperSubmissionController extends Controller
 	}
 	public function submission_4()
 	{
+		$this->authorize('new_paper_submission');
 		if (!session()->has('paper_submission_id')) {
 			return redirect()->route('submission_step_1');
 		}
@@ -81,6 +84,7 @@ class PaperSubmissionController extends Controller
 
 	public function my_submission($in_draft = 0)
 	{
+		$this->authorize('author_my_submission');
 		return view('pages.paper.view')->with([
 			'meta_title' => 'My Submission',
 			'my_submissions' => $this->paper_submission_interface->my_submission($in_draft),
@@ -89,6 +93,7 @@ class PaperSubmissionController extends Controller
 
 	public function view_paper_detail($id)
 	{
+		$this->authorize('author_my_submission');
 		$paper = $this->paper_submission_interface->paper_detail_get_by_id($id);
 		if (!$paper) {
 			return back();
@@ -102,6 +107,7 @@ class PaperSubmissionController extends Controller
 	}
 	public function continue_draft($id)
 	{
+		$this->authorize('new_paper_submission');
 		$paper = $this->paper_submission_interface->continue_draft($id);
 		if ($paper) {
 			session(['paper_submission_id' => $paper->id]);
@@ -115,21 +121,25 @@ class PaperSubmissionController extends Controller
 
 	public function submission_1_req(Request $request)
 	{
+		$this->authorize('new_paper_submission');
 		session(['paper_submission_id' => 0]);
 		return redirect()->route('submission_step_2');
 	}
 	public function submission_2_req(Request $request)
 	{
+		$this->authorize('new_paper_submission');
 		$paper = $this->paper_submission_interface->create_update_paper_with_id($request, session('paper_submission_id'));
 		session(['paper_submission_id' => $paper->id]);
 		return redirect()->route('submission_step_3');
 	}
 	public function submission_3_req(Request $request)
 	{
+		$this->authorize('new_paper_submission');
 		return redirect()->route('submission_step_4');
 	}
 	public function submission_4_req(Request $request)
 	{
+		$this->authorize('new_paper_submission');
 		$paper = $this->paper_submission_interface->submit_update_paper_with_id($request, session('paper_submission_id'));
 		session()->forget('paper_submission_id');
 		Mail::to(auth()->user()->email)->send(new PaperSubmissionEmail($paper->paper_no, $paper->title, auth()->user()->name));
@@ -138,6 +148,7 @@ class PaperSubmissionController extends Controller
 
 	public function all_submissions_page()
 	{
+		$this->authorize('view_all_submission');
 		return view('pages.paper.view')->with([
 			'meta_title' => 'All Submissioin',
 			'my_submissions' => $this->paper_submission_interface->all_submissions(),

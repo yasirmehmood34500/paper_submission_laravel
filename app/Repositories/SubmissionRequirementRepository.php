@@ -12,15 +12,18 @@ class SubmissionRequirementRepository implements SubmissionRequirementInterface
 		// Your constructor code here
 	}
 
-	public function view(){
+	public function view()
+	{
 		return $this->submission_requirement_model->get();
 	}
-	public function create($request){
+	public function create($request)
+	{
 		$this->submission_requirement_model->create($request->except(['_token']));
 		return true;
 	}
-	public function delete($id){
-		$this->submission_requirement_model->where('id',$id)->delete();
+	public function delete($id)
+	{
+		$this->submission_requirement_model->where('id', $id)->delete();
 		return true;
 	}
 }

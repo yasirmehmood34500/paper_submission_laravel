@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Controllers\Controller;
 use App\Interfaces\PaperSubmissionInterface;
 use App\Models\PaperSubmission;
 
@@ -48,7 +49,7 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 	public function paper_detail_get_by_id($id)
 	{
 		$paper = $this->paper_submission_model->where('in_draft', 0);
-		if (auth()->user()->user_level != 1) {
+		if (!Controller::CheckAllowedPermission(['view_all_submission'])) {
 			$paper = $paper->where('user_id', auth()->id());
 		}
 		return $paper->where('id', $id)->first();

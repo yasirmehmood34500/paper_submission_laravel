@@ -13,7 +13,12 @@
                     <tr>
                         <td>{{ $author_user->name }}</td>
                         <td>{{ $author_user->email }}</td>
-                        <th><a href="{{ route('view_user_permission_page', ['user_id' => $author_user->id]) }}" class="btn btn-primary">Assign Permission</a></th>
+                        <th>
+                            @can('assign_user_permission')
+                                <a href="{{ route('view_user_permission_page', ['user_id' => $author_user->id]) }}"
+                                    class="btn btn-primary">Assign Permission</a>
+                            @endcan
+                        </th>
                     </tr>
                 @endforeach
             </table>

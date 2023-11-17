@@ -15,6 +15,7 @@ class UserController extends Controller
 
 	public function view_author()
 	{
+		$this->authorize('view_author');
 		return view('pages.author.view')->with([
 			'meta_title' => 'Authors',
 			'author_users' => $this->user_interface->view_user_by_level(User::AUTHOR),
@@ -23,6 +24,7 @@ class UserController extends Controller
 
 	public function add_author_page()
 	{
+		$this->authorize('add_author');
 		return view('pages.author.add')->with([
 			'meta_title' => 'Add Author',
 		]);
@@ -30,12 +32,14 @@ class UserController extends Controller
 
 	public function add_author_req(Request $request)
 	{
+		$this->authorize('add_author');
 		$this->user_interface->create($request);
 		return redirect()->route('view_author_page');
 	}
 
 	public function view_reviewer()
 	{
+		$this->authorize('view_reviewer');
 		return view('pages.reviewer.view')->with([
 			'meta_title' => 'Reviewers',
 			'reviewer_users' => $this->user_interface->view_user_by_level(User::REVIEWER),
@@ -44,6 +48,7 @@ class UserController extends Controller
 
 	public function add_reviewer_page()
 	{
+		$this->authorize('add_reviewer');
 		return view('pages.reviewer.add')->with([
 			'meta_title' => 'Add Reviewer',
 		]);
@@ -51,6 +56,7 @@ class UserController extends Controller
 
 	public function add_reviewer_req(Request $request)
 	{
+		$this->authorize('add_reviewer');
 		$this->user_interface->create($request);
 		return redirect()->route('view_reviewer_page');
 	}

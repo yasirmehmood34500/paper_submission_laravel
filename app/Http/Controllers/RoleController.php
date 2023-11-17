@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-	public function __construct(protected RoleInterface $role_interface){
-	 //
+	public function __construct(protected RoleInterface $role_interface)
+	{
+		//
 	}
 }

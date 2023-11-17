@@ -90,6 +90,21 @@ class RoleSeeder extends Seeder
                 'key' => 'delete_paper_submission_requirement',
                 'user_level' => User::ADMIN,
             ],
+            [
+                'name' => 'Delete Paper File Type',
+                'key' => 'delete_paper_file_type',
+                'user_level' => User::ADMIN,
+            ],
+            [
+                'name' => 'Delete Contributor Rule',
+                'key' => 'delete_contributor_rule',
+                'user_level' => User::ADMIN,
+            ],
+            [
+                'name' => 'Assign User Permission',
+                'key' => 'assign_user_permission',
+                'user_level' => User::ADMIN,
+            ],
             
         ];
         foreach ($roles as $value) {

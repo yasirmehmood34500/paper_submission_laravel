@@ -54,11 +54,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('contributor-rule')->controller(AuthorContributorRuleController::class)->group(function () {
         Route::get('view', 'view')->name('contributor_rule_page');
+        Route::get('delete/{id}', 'delete')->name('contributor_rule_delete');
         Route::post('add', 'add')->name('add_contributor_rule');
     });
 
     Route::prefix('file-type')->controller(SubmissionFileTypeController::class)->group(function () {
         Route::get('view', 'view')->name('file_type_page');
+        Route::get('delete/{id}', 'delete')->name('file_type_delete');
         Route::post('add', 'add')->name('add_file_type');
     });
 

@@ -15,6 +15,7 @@ class RoleUserController extends Controller
 	}
 	public function view_user_permission($user_id)
 	{
+		$this->authorize('assign_user_permission');
 		return view('pages.assign-permission.view')->with([
 			'meta_title' => 'Assign Permission',
 			'roles' => $this->role_interface->view(),
@@ -23,6 +24,7 @@ class RoleUserController extends Controller
 	}
 	public function add_user_permission_req(Request $request)
 	{
+		$this->authorize('assign_user_permission');
 		$user = $this->user_interface->single($request->user_id);
 		$user->roles()->sync($request->roles);
 		return back();

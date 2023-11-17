@@ -23,4 +23,9 @@ class AuthorContributorRuleRepository implements AuthorContributorRuleInterface
 		);
 		return true;
 	}
+	public function delete($id)
+	{
+		$this->author_contributor_rule_model->where('id', $id)->delete();
+		return true;
+	}
 }

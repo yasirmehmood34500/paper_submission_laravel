@@ -23,4 +23,9 @@ class SubmissionFileTypeRepository implements SubmissionFileTypeInterface
 		);
 		return true;
 	}
+	public function delete($id)
+	{
+		$this->submission_file_type_model->where('id', $id)->delete();
+		return true;
+	}
 }

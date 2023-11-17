@@ -15,6 +15,7 @@ class SubmissionFileController extends Controller
 	}
 	public function upload_file(Request $request)
 	{
+		$this->authorize('new_paper_submission');
 		if ($request->hasFile('file_name')) {
 			$file = $request->file('file_name');
 			$path = 'uploads/submission/';
@@ -33,6 +34,7 @@ class SubmissionFileController extends Controller
 	}
 	public function delete_file($id)
 	{
+		$this->authorize('new_paper_submission');
 		$this->submission_file_interface->delete($id);
 		return back();
 	}
