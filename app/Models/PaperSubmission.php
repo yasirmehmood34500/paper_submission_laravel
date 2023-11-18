@@ -22,6 +22,7 @@ class PaperSubmission extends Model
         'start_date',
         'send_date',
         'active',
+        'revision',
     ];
 
     /**

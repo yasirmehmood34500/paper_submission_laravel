@@ -12,10 +12,6 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 	{
 		// Your constructor code here
 	}
-	public function paper_get_by_id($id)
-	{
-		return $this->paper_submission_model->where('id', $id)->where('in_draft', 1)->where('user_id', auth()->id())->first();
-	}
 	public function create_update_paper_with_id($request, $id)
 	{
 		if ($request['paper_no'] == 'none') {
@@ -46,9 +42,9 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 	{
 		return $this->paper_submission_model->where('in_draft', 1)->where('user_id', auth()->id())->where('id', $id)->first();
 	}
-	public function paper_detail_get_by_id($id)
+	public function get_by_id_with_draft($paper_id)
 	{
-		$paper = $this->paper_submission_model->where('in_draft', 0)->where('id', $id);
+		$paper = $this->paper_submission_model->where('id', $paper_id);
 		if (!Controller::CheckAllowedPermission(['view_all_submission'])) {
 			$paper = $paper->where('user_id', auth()->id());
 		}

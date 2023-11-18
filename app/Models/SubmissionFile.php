@@ -15,6 +15,7 @@ class SubmissionFile extends Model
         'submission_file_type_id',
         'file_name',
         'active',
+        'revision',
     ];
     /**
      * Get the file_type that owns the SubmissionFile

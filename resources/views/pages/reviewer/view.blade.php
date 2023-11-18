@@ -14,10 +14,12 @@
                         <td>{{ $reviewer_user->name }}</td>
                         <td>{{ $reviewer_user->email }}</td>
                         <th>
-                            @can('assign_user_permission')
-                                <a href="{{ route('view_user_permission_page', ['user_id' => $reviewer_user->id]) }}"
-                                    class="btn btn-primary">Assign Permission</a>
-                            @endcan
+                            @if ($author_user->id != auth()->id())
+                                @can('assign_user_permission')
+                                    <a href="{{ route('view_user_permission_page', ['user_id' => $reviewer_user->id]) }}"
+                                        class="btn btn-primary">Assign Permission</a>
+                                @endcan
+                            @endif
                         </th>
                     </tr>
                 @endforeach

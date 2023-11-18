@@ -1,19 +1,22 @@
 @extends('layouts.main')
 @section('css')
     <style>
-        .box{
+        .box {
             border: 1px solid #80808091;
-    border-radius: 5px;
-    padding: 5px;
-    margin: 1px;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 1px;
         }
-        .box1{
+
+        .box1 {
             background: #ff000029;
         }
-        .box2{
+
+        .box2 {
             background: #0080001f;
         }
-        .box3{
+
+        .box3 {
             background: #0b064d24;
         }
     </style>
@@ -26,20 +29,41 @@
             <input type="hidden" value="{{ request()->route('user_id') }}" name="user_id">
             <div class="row sameheight-container">
                 @foreach ($roles as $role)
-                    <div class="col-md-4">
-                    <div class="row box box{{ $role->user_level }}">
-                        <div class="col-md-9">
-                            <b>{{ $role->name }}</b>
-                        </div>
-                        <div class="col-md-3">                            
-                            <input type="checkbox" {{ $user->roles->contains($role->id) ? 'checked' : '' }} name="roles[]"
-                            value="{{ $role->id }}" />
-                        </div>
-                        <div class="col-md-12">
-                            <i><u>{{ App\Models\User::USER_TYPE[$role->user_level] }} Role</u></i>
-                        </div>
-                    </div>
-                    </div>
+                    @if (auth()->user()->roles->contains($role->id) || auth()->user()->user_level == App\Models\User::ADMIN)
+                        @if ($role->key == 'assign_user_permission')
+                            @if (auth()->user()->user_level == App\Models\User::ADMIN)
+                                <div class="col-md-4">
+                                    <div class="row box box{{ $role->user_level }}">
+                                        <div class="col-md-9">
+                                            <b>{{ $role->name }} perm</b>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="checkbox" {{ $user->roles->contains($role->id) ? 'checked' : '' }}
+                                                name="roles[]" value="{{ $role->id }}" />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <i><u>{{ App\Models\User::USER_TYPE[$role->user_level] }} Role</u></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @else
+                            <div class="col-md-4">
+                                <div class="row box box{{ $role->user_level }}">
+                                    <div class="col-md-9">
+                                        <b>{{ $role->name }}</b>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="checkbox" {{ $user->roles->contains($role->id) ? 'checked' : '' }}
+                                            name="roles[]" value="{{ $role->id }}" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <i><u>{{ App\Models\User::USER_TYPE[$role->user_level] }} Role</u></i>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
                 @endforeach
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-primary">Save</button>

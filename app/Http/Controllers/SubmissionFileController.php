@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\PaperSubmissionInterface;
 use App\Interfaces\SubmissionFileInterface;
 use App\Models\SubmissionFile;
 use Illuminate\Http\Request;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class SubmissionFileController extends Controller
 {
-	public function __construct(protected SubmissionFileInterface $submission_file_interface)
+	public function __construct(protected SubmissionFileInterface $submission_file_interface, protected PaperSubmissionInterface $paper_submission_interface,)
 	{
 		//
 	}
@@ -24,10 +25,12 @@ class SubmissionFileController extends Controller
 				Storage::makeDirectory($path);
 			}
 			$file->move(storage_path('app/public/' . $path), $filename);
+			$paper = $this->paper_submission_interface->get_by_id_with_draft(paper_id: session('paper_submission_id'));
 			SubmissionFile::create([
 				'paper_submission_id' => session('paper_submission_id'),
 				'file_name' => $filename,
 				'submission_file_type_id' => $request->submission_file_type_id,
+				'revision' => $paper->revision,
 			]);
 		}
 		return back();
