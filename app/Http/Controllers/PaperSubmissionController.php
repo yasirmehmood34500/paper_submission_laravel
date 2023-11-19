@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\AssignReviewInterface;
 use App\Interfaces\AuthorContributorInterface;
 use App\Interfaces\AuthorContributorRuleInterface;
 use App\Interfaces\PaperSubmissionInterface;
@@ -20,7 +21,8 @@ class PaperSubmissionController extends Controller
 		protected AuthorContributorInterface $author_contributor_interface,
 		protected AuthorContributorRuleInterface $author_contributor_rule_interface,
 		protected SubmissionFileTypeInterface $submission_file_type_interface,
-		protected SubmissionRequirementInterface $submission_requirement_interface
+		protected SubmissionRequirementInterface $submission_requirement_interface,
+		protected AssignReviewInterface $assign_review_interface
 	) {
 		//
 	}
@@ -38,7 +40,7 @@ class PaperSubmissionController extends Controller
 		if (!session()->has('paper_submission_id')) {
 			return redirect()->route('submission_step_1');
 		}
-		$paper = $this->paper_submission_interface->get_by_id_with_draft(paper_id: session('paper_submission_id'));
+		$paper = $this->paper_submission_interface->get_by_id(paper_id: session('paper_submission_id'));
 		if (!$paper && session('paper_submission_id') != 0) {
 			return redirect()->route('submission_step_1');
 		}
@@ -53,7 +55,7 @@ class PaperSubmissionController extends Controller
 		if (!session()->has('paper_submission_id')) {
 			return redirect()->route('submission_step_1');
 		}
-		$paper = $this->paper_submission_interface->get_by_id_with_draft(paper_id: session('paper_submission_id'));
+		$paper = $this->paper_submission_interface->get_by_id(paper_id: session('paper_submission_id'));
 		if (!$paper) {
 			return redirect()->route('submission_step_1');
 		}
@@ -70,7 +72,7 @@ class PaperSubmissionController extends Controller
 		if (!session()->has('paper_submission_id')) {
 			return redirect()->route('submission_step_1');
 		}
-		$paper = $this->paper_submission_interface->get_by_id_with_draft(paper_id: session('paper_submission_id'));
+		$paper = $this->paper_submission_interface->get_by_id(paper_id: session('paper_submission_id'));
 		if (!$paper) {
 			return redirect()->route('submission_step_1');
 		}
@@ -94,7 +96,7 @@ class PaperSubmissionController extends Controller
 	public function view_paper_detail($id)
 	{
 		$this->authorize('author_my_submission');
-		$paper = $this->paper_submission_interface->get_by_id_with_draft(paper_id: $id);
+		$paper = $this->paper_submission_interface->get_by_id(paper_id: $id);
 		if (!$paper) {
 			return back();
 		}
@@ -103,6 +105,7 @@ class PaperSubmissionController extends Controller
 			'paper' => $paper,
 			'paper_contributors' => $this->author_contributor_interface->get_by_paper_id($paper->id),
 			'paper_files' => $this->submission_file_interface->get_by_paper_id($paper->id),
+			'assign_reviewers' => $this->assign_review_interface->get_by_paper_id($paper->id),
 		]);
 	}
 	public function continue_draft($id)

@@ -105,6 +105,11 @@ class RoleSeeder extends Seeder
                 'key' => 'assign_user_permission',
                 'user_level' => User::ADMIN,
             ],
+            [
+                'name' => 'Assign To Review',
+                'key' => 'assign_to_review',
+                'user_level' => User::ADMIN,
+            ],
             
         ];
         foreach ($roles as $value) {

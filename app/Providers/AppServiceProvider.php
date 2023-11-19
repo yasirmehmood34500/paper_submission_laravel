@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Interfaces\AssignReviewInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\LoginInterface;
 use App\Repositories\UserRepository;
@@ -20,6 +21,7 @@ use App\Interfaces\RoleInterface;
 use App\Interfaces\RoleUserInterface;
 use App\Interfaces\SubmissionRequirementInterface;
 use App\Models\SubmissionRequirement;
+use App\Repositories\AssignReviewRepository;
 use App\Repositories\SubmissionFileTypeRepository;
 use App\Repositories\AuthorContributorRuleRepository;
 use App\Repositories\RoleRepository;
@@ -52,5 +54,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SubmissionRequirementInterface::class, SubmissionRequirementRepository::class);
         $this->app->bind(RoleInterface::class, RoleRepository::class);
         $this->app->bind(RoleUserInterface::class, RoleUserRepository::class);
+        $this->app->bind(AssignReviewInterface::class, AssignReviewRepository::class);
     }
 }

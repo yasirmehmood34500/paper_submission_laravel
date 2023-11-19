@@ -25,7 +25,7 @@ class SubmissionFileController extends Controller
 				Storage::makeDirectory($path);
 			}
 			$file->move(storage_path('app/public/' . $path), $filename);
-			$paper = $this->paper_submission_interface->get_by_id_with_draft(paper_id: session('paper_submission_id'));
+			$paper = $this->paper_submission_interface->get_by_id(paper_id: session('paper_submission_id'));
 			SubmissionFile::create([
 				'paper_submission_id' => session('paper_submission_id'),
 				'file_name' => $filename,

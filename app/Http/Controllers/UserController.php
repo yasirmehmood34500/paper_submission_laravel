@@ -60,4 +60,11 @@ class UserController extends Controller
 		$this->user_interface->create($request);
 		return redirect()->route('view_reviewer_page');
 	}
+
+	public function search_reviewer(Request $request)
+	{
+		return response()->json([
+			'user' => $this->user_interface->search_user_by_level(user_level: User::REVIEWER, search: $request->text)
+		]);
+	}
 }

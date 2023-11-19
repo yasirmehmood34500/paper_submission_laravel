@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssignReviewController;
 use App\Http\Controllers\AuthorContributorController;
 use App\Http\Controllers\AuthorContributorRuleController;
 use App\Http\Controllers\LoginController;
@@ -73,6 +74,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('view', 'view_author')->name('view_author_page');
         Route::get('add', 'add_author_page')->name('add_author_page');
         Route::post('add', 'add_author_req')->name('add_author_req');
+        Route::post('search', 'search_reviewer')->name('search_reviewer_req');
     });
 
     Route::prefix('reviewer')->controller(UserController::class)->group(function () {
@@ -90,6 +92,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('view', 'view')->name('view_submissioin_requirement_page');
         Route::get('delete/{id}', 'delete')->name('delete_submissioin_requirement');
         Route::post('view', 'create')->name('create_submissioin_requirement');
+    });
+
+    Route::prefix('assign-to-reviewer')->controller(AssignReviewController::class)->group(function () {
+        Route::get('send/{user_id}/{paper_id}', 'add')->name('send_to_reviewer');
     });
 });
 

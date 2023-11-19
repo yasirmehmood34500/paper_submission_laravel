@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\UserInterface;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository implements UserInterface
 {
@@ -29,5 +30,14 @@ class UserRepository implements UserInterface
 	public function single($id)
 	{
 		return $this->user_model->with('roles')->where('id', $id)->first();
+	}
+	public function search_user_by_level($user_level, $search)
+	{
+		return $this->user_model
+			->where('user_level', $user_level)
+			->where(function ($query) use ($search) {
+				$query->orWhere('name', 'LIKE', "%$search%")
+					->orWhere('email', 'LIKE', "%$search%");
+			})->limit(5)->get();
 	}
 }

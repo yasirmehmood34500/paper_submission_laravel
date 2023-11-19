@@ -42,7 +42,7 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 	{
 		return $this->paper_submission_model->where('in_draft', 1)->where('user_id', auth()->id())->where('id', $id)->first();
 	}
-	public function get_by_id_with_draft($paper_id)
+	public function get_by_id($paper_id)
 	{
 		$paper = $this->paper_submission_model->where('id', $paper_id);
 		if (!Controller::CheckAllowedPermission(['view_all_submission'])) {
