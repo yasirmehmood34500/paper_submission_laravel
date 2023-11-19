@@ -27,4 +27,14 @@ class AssignReview extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the paper_submission that owns the AssignReview
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function paper_submission(): BelongsTo
+    {
+        return $this->belongsTo(PaperSubmission::class);
+    }
 }

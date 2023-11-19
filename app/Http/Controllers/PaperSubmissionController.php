@@ -22,7 +22,7 @@ class PaperSubmissionController extends Controller
 		protected AuthorContributorRuleInterface $author_contributor_rule_interface,
 		protected SubmissionFileTypeInterface $submission_file_type_interface,
 		protected SubmissionRequirementInterface $submission_requirement_interface,
-		protected AssignReviewInterface $assign_review_interface
+		protected AssignReviewInterface $assign_review_interface,
 	) {
 		//
 	}
@@ -95,10 +95,10 @@ class PaperSubmissionController extends Controller
 
 	public function view_paper_detail($id)
 	{
-		$this->authorize('author_my_submission');
+		// $this->authorize('author_my_submission');
 		$paper = $this->paper_submission_interface->get_by_id(paper_id: $id);
 		if (!$paper) {
-			return back();
+			abort(404);
 		}
 		return view('pages.paper.detail')->with([
 			'meta_title' => 'Paper Detail',
@@ -106,6 +106,7 @@ class PaperSubmissionController extends Controller
 			'paper_contributors' => $this->author_contributor_interface->get_by_paper_id($paper->id),
 			'paper_files' => $this->submission_file_interface->get_by_paper_id($paper->id),
 			'assign_reviewers' => $this->assign_review_interface->get_by_paper_id($paper->id),
+			'allow_revision_file_no' => $this->assign_review_interface->revision_no_of_assign_paper($paper->id),
 		]);
 	}
 	public function continue_draft($id)
@@ -155,6 +156,15 @@ class PaperSubmissionController extends Controller
 		return view('pages.paper.view')->with([
 			'meta_title' => 'All Submissioin',
 			'my_submissions' => $this->paper_submission_interface->all_submissions(),
+		]);
+	}
+
+	public function reviewer_assign_page()
+	{
+		$this->authorize('view_assign_paper');
+		return view('pages.paper.assign-paper')->with([
+			'meta_title' => 'Assign Paper',
+			'assign_papers' => $this->assign_review_interface->view_reviewer_assign_paper(),
 		]);
 	}
 }

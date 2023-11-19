@@ -12,7 +12,10 @@
                     <a href="{{ route('home') }}">
                         <i class="fa fa-home"></i> Dashboard </a>
                 </li>
-                @if (Gate::check('view_all_submission') || Gate::check('new_paper_submission') || Gate::check('author_my_submission'))
+                @if (Gate::check('view_all_submission') ||
+                        Gate::check('new_paper_submission') ||
+                        Gate::check('author_my_submission') ||
+                        Gate::check('view_assign_paper'))
                     <li>
                         <a href="#">
                             <i class="fa fa-th-large"></i> Paper
@@ -35,6 +38,11 @@
                                 </li>
                                 <li>
                                     <a href="{{ route('my_submission') }}"> Sended </a>
+                                </li>
+                            @endcan
+                            @can('view_assign_paper')
+                                <li>
+                                    <a href="{{ route('reviewer_assign_page') }}">For Review </a>
                                 </li>
                             @endcan
                         </ul>

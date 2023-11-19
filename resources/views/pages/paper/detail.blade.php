@@ -40,21 +40,23 @@
                 <p>{{ $paper->keywords }}</p>
             </div>
             <br>
-            <h5>Contributors</h5>
-            <table class="table table-striped">
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Rule</th>
-                </tr>
-                @foreach ($paper_contributors as $paper_contributor)
+            @if (Gate::check('view_all_submission') || $paper->user_id == auth()->id())
+                <h5>Contributors</h5>
+                <table class="table table-striped">
                     <tr>
-                        <td>{{ $paper_contributor->name }}</td>
-                        <td>{{ $paper_contributor->email }}</td>
-                        <td>{{ $paper_contributor->contributor_rule->name }}</td>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Rule</th>
                     </tr>
-                @endforeach
-            </table>
+                    @foreach ($paper_contributors as $paper_contributor)
+                        <tr>
+                            <td>{{ $paper_contributor->name }}</td>
+                            <td>{{ $paper_contributor->email }}</td>
+                            <td>{{ $paper_contributor->contributor_rule->name }}</td>
+                        </tr>
+                    @endforeach
+                </table>
+            @endif
             <h5>Paper Files</h5>
             <table class="table table-striped">
                 <tr>
@@ -63,12 +65,16 @@
                     <th>Action</th>
                 </tr>
                 @foreach ($paper_files as $paper_file)
-                    <tr>
-                        <td>{{ $paper_file->file_type->name }}</td>
-                        <td>R{{ $paper_file->revision }}</td>
-                        <td><a href="{{ asset('storage/uploads/submission') }}/{{ $paper_file->file_name }}"
-                                download="">Download</a></td>
-                    </tr>
+                    @if (in_array((int) $paper_file->revision, $allow_revision_file_no->toArray()) ||
+                            $paper->user_id == auth()->id() ||
+                            Gate::check('view_all_submission'))
+                        <tr>
+                            <td>{{ $paper_file->file_type->name }}</td>
+                            <td>R{{ $paper_file->revision }}</td>
+                            <td><a href="{{ asset('storage/uploads/submission') }}/{{ $paper_file->file_name }}"
+                                    download="">Download</a></td>
+                        </tr>
+                    @endif
                 @endforeach
             </table>
         </div>

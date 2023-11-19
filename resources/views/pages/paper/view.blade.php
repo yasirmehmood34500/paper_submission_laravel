@@ -2,19 +2,19 @@
 @section('content')
     <section class="section">
         <h2>
-            @if (auth()->user()->user_level == 1)
+            @can('view_all_submission')
                 All Submissions
             @else
                 My {{ request()->route('in_draft') == 1 ? 'Draft' : 'Sended' }}
-            @endif
+            @endcan
         </h2>
         <div class="row sameheight-container">
             <table class="table table-striped">
                 <tr>
                     <th>Paper no</th>
-                    @if (auth()->user()->user_level == 1)
+                    @can('view_all_submission')
                         <th>Email</th>
-                    @endif
+                    @endcan
                     <th>Title</th>
                     <th>Status</th>
                     <th>Start Date</th>
@@ -31,15 +31,15 @@
                                     href="{{ route('view_paper_detail', ['id' => $my_submission->id]) }}"><b>{{ $my_submission->paper_no }}</b></a>
                             @endif
                         </td>
-                        @if (auth()->user()->user_level == 1)
+                        @can('view_all_submission')
                             <td>{{ @$my_submission?->user?->email }}</td>
-                        @endif
+                        @endcan
                         <td>{{ $my_submission->title }}</td>
                         <td>
                             @if ($my_submission->in_draft)
                                 Draft
                             @else
-                                {{ $my_submission->status }}
+                                {{ App\Models\PaperSubmission::PAPER_STATUS[$my_submission->status == 'Pending' ? 0 : $my_submission->status] }}
                             @endif
                         </td>
                         <td>

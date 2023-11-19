@@ -23,7 +23,7 @@ return new class extends Migration
             $table->tinyInteger('in_draft')->nullable()->default(1);
             $table->date('start_date')->nullable()->default(date('Y-m-d H:i'));
             $table->date('send_date')->nullable()->default(date('Y-m-d H:i'));
-            $table->string('status',30)->nullable()->default("Pending");
+            $table->tinyInteger('status',30)->nullable()->default(0);
             $table->tinyInteger('active')->nullable()->default(1);
             $table->timestamps();
             $table->softDeletes();

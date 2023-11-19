@@ -25,6 +25,10 @@ class PaperSubmission extends Model
         'revision',
     ];
 
+    public const PAPER_STATUS=['Pending','Under Review'];
+    public const PENDING_STATUS=0;
+    public const UNDER_REVIEW_STATUS=1;
+
     /**
      * Get the user that owns the PaperSubmission
      *

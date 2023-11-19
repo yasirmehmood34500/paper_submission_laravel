@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
 
 
         Route::get('all_submissions', 'all_submissions_page')->name('all_submissions_page');
+        Route::get('assign-paper', 'reviewer_assign_page')->name('reviewer_assign_page');
     });
 
 

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Http\Controllers\Controller;
 use App\Interfaces\PaperSubmissionInterface;
+use App\Models\AssignReview;
 use App\Models\PaperSubmission;
 
 class PaperSubmissionRepository implements PaperSubmissionInterface
@@ -48,7 +49,16 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 		if (!Controller::CheckAllowedPermission(['view_all_submission'])) {
 			$paper = $paper->where('user_id', auth()->id());
 		}
-		return $paper->first();
+		$paper = $paper->first();
+		if ($paper == null) {
+			if (Controller::CheckAllowedPermission(['view_assign_paper'])) {
+				$assign_review_paper = AssignReview::where('paper_submission_id', $paper_id)->where('user_id', auth()->id())->first();
+				if ($assign_review_paper) {
+					$paper = $this->paper_submission_model->where('id', $paper_id)->first();
+				}
+			}
+		}
+		return $paper;
 	}
 	public function all_submissions()
 	{
