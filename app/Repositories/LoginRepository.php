@@ -40,9 +40,14 @@ class LoginRepository implements LoginInterface
 		}
 		$request['user_level'] = $this->user_model::AUTHOR;
 		$user = $this->user_model->create($request->except('_token'));
-		$roles = $this->role_model->where('user_level', $this->user_model::AUTHOR)->get()->pluck("id");
-		$user->roles()->sync($roles);
+		$this->assign_permission_to_user($user, (int) $this->user_model::AUTHOR);
 		Auth::login($user);
 		return [true, 'Registration Successfully'];
+	}
+	public static function assign_permission_to_user(User $user, int $role_id)
+	{
+		$roles = Role::where('user_level', $role_id)->get()->pluck("id");
+		$user->roles()->sync($roles);
+		return true;
 	}
 }
