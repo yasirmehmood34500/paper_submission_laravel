@@ -33,10 +33,15 @@
 
         <div class="row sameheight-container">
             <div class="col-md-12">
+                <b>Prefix:</b>
                 <p>{{ $paper->prefix }}</p>
+                <b>Title:</b>
                 <p>{{ $paper->title }}</p>
+                <b>Sub Title:</b>
                 <p>{{ $paper->sub_title }}</p>
+                <b>Abstract:</b>
                 <p>{{ $paper->abstract }}</p>
+                <b>Keywords:</b>
                 <p>{{ $paper->keywords }}</p>
             </div>
             <br>
