@@ -56,12 +56,12 @@ class RoleSeeder extends Seeder
                 'user_level' => User::AUTHOR,
             ],
             [
-                'name' => 'Add Contributor Rules',
+                'name' => 'Add Contributor Roles',
                 'key' => 'add_contributor_rule',
                 'user_level' => User::ADMIN,
             ],
             [
-                'name' => 'View Contributor Rules',
+                'name' => 'View Contributor Roles',
                 'key' => 'view_contributor_rule',
                 'user_level' => User::ADMIN,
             ],
@@ -96,7 +96,7 @@ class RoleSeeder extends Seeder
                 'user_level' => User::ADMIN,
             ],
             [
-                'name' => 'Delete Contributor Rule',
+                'name' => 'Delete Contributor Role',
                 'key' => 'delete_contributor_rule',
                 'user_level' => User::ADMIN,
             ],

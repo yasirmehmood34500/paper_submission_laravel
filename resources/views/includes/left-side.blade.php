@@ -93,7 +93,7 @@
                 @if (Gate::check('add_contributor_rule') || Gate::check('view_contributor_rule'))
                     <li>
                         <a href="{{ route('contributor_rule_page') }}">
-                            <i class="fa fa-pencil-square-o"></i> Contributor Rule </a>
+                            <i class="fa fa-pencil-square-o"></i> Contributor Role </a>
                     </li>
                 @endif
                 @if (Gate::check('add_paper_file_type') || Gate::check('view_paper_file_type'))

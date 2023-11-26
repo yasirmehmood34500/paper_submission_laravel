@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
     <section class="section">
-        <h4>Contributor Rules</h4>
+        <h4>Contributor Roles</h4>
         <div class="row sameheight-container">
             @can('add_contributor_rule')
                 <div class="col-md-4">
