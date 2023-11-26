@@ -39,7 +39,7 @@
                             @if ($my_submission->in_draft)
                                 Draft
                             @else
-                                {{ App\Models\PaperSubmission::PAPER_STATUS[$my_submission->status == 'Pending' ? 0 : $my_submission->status] }}
+                                {{ App\Models\PaperSubmission::PAPER_STATUS[$my_submission->status] }}
                             @endif
                         </td>
                         <td>
