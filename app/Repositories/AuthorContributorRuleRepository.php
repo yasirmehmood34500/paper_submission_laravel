@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\AuthorContributorRuleInterface;
 use App\Models\AuthorContributorRule;
+use Illuminate\Database\Eloquent\Collection;
 
 class AuthorContributorRuleRepository implements AuthorContributorRuleInterface
 {
@@ -11,11 +12,11 @@ class AuthorContributorRuleRepository implements AuthorContributorRuleInterface
 	{
 		// Your constructor code here
 	}
-	public function all()
+	public function all(): AuthorContributorRule | Collection
 	{
 		return $this->author_contributor_rule_model->get();
 	}
-	public function add($request)
+	public function add($request): bool
 	{
 		$this->author_contributor_rule_model->updateOrCreate(
 			['name' => $request['name']],
@@ -23,7 +24,7 @@ class AuthorContributorRuleRepository implements AuthorContributorRuleInterface
 		);
 		return true;
 	}
-	public function delete($id)
+	public function delete($id): bool
 	{
 		$this->author_contributor_rule_model->where('id', $id)->delete();
 		return true;

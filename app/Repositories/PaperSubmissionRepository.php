@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Interfaces\PaperSubmissionInterface;
 use App\Models\AssignReview;
 use App\Models\PaperSubmission;
+use Illuminate\Database\Eloquent\Collection;
 
 class PaperSubmissionRepository implements PaperSubmissionInterface
 {
@@ -35,15 +36,15 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 			]
 		);
 	}
-	public function my_submission($in_draft)
+	public function my_submission($in_draft): PaperSubmission | Collection
 	{
 		return $this->paper_submission_model->where('in_draft', $in_draft)->where('user_id', auth()->id())->orderBy('id', 'DESC')->get();
 	}
-	public function continue_draft($id)
+	public function continue_draft($id): ?PaperSubmission
 	{
 		return $this->paper_submission_model->where('in_draft', 1)->where('user_id', auth()->id())->where('id', $id)->first();
 	}
-	public function get_by_id($paper_id)
+	public function get_by_id($paper_id): ?PaperSubmission
 	{
 		$paper = $this->paper_submission_model->where('id', $paper_id);
 		if (!Controller::CheckAllowedPermission(['view_all_submission'])) {
@@ -60,7 +61,7 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 		}
 		return $paper;
 	}
-	public function all_submissions()
+	public function all_submissions(): PaperSubmission | Collection
 	{
 		return $this->paper_submission_model->with('user')->where('in_draft', 0)->orderBy('id', 'DESC')->get();
 	}

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\SubmissionFileTypeInterface;
 use App\Models\SubmissionFileType;
+use Illuminate\Database\Eloquent\Collection;
 
 class SubmissionFileTypeRepository implements SubmissionFileTypeInterface
 {
@@ -11,11 +12,11 @@ class SubmissionFileTypeRepository implements SubmissionFileTypeInterface
 	{
 		// Your constructor code here
 	}
-	public function all()
+	public function all(): SubmissionFileType | Collection
 	{
 		return $this->submission_file_type_model->get();
 	}
-	public function add($request)
+	public function add($request): bool
 	{
 		$this->submission_file_type_model->updateOrCreate(
 			['name' => $request['name']],
@@ -23,7 +24,7 @@ class SubmissionFileTypeRepository implements SubmissionFileTypeInterface
 		);
 		return true;
 	}
-	public function delete($id)
+	public function delete($id): bool
 	{
 		$this->submission_file_type_model->where('id', $id)->delete();
 		return true;

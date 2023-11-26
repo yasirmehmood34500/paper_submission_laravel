@@ -6,6 +6,7 @@ use App\Interfaces\AssignReviewInterface;
 
 use App\Models\AssignReview;
 use App\Models\PaperSubmission;
+use Illuminate\Database\Eloquent\Collection;
 
 class AssignReviewRepository implements AssignReviewInterface
 {
@@ -13,7 +14,7 @@ class AssignReviewRepository implements AssignReviewInterface
 	{
 		// Your constructor code here
 	}
-	public function add($user_id, $paper)
+	public function add($user_id, $paper): bool
 	{
 		$this->assign_review_model->firstOrCreate(
 			[
@@ -26,11 +27,11 @@ class AssignReviewRepository implements AssignReviewInterface
 		$paper->save();
 		return true;
 	}
-	public function get_by_paper_id($paper_id)
+	public function get_by_paper_id($paper_id): AssignReview | Collection
 	{
 		return $this->assign_review_model->with('user')->where('paper_submission_id', $paper_id)->get();
 	}
-	public function view_reviewer_assign_paper()
+	public function view_reviewer_assign_paper(): AssignReview | Collection
 	{
 		return $this->assign_review_model->with('paper_submission')->where('user_id', auth()->id())->get();
 	}

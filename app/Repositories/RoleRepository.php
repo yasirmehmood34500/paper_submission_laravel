@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\RoleInterface;
 
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Collection;
 
 class RoleRepository implements RoleInterface
 {
@@ -12,7 +13,7 @@ class RoleRepository implements RoleInterface
 	{
 		// Your constructor code here
 	}
-	public function view()
+	public function view(): Role | Collection
 	{
 		return $this->role_model->orderBy('user_level', 'ASC')->get();
 	}

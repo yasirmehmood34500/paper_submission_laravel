@@ -13,7 +13,7 @@ class LoginRepository implements LoginInterface
 	{
 		// Your constructor code here
 	}
-	public function login_req($request)
+	public function login_req($request): array
 	{
 		$credentials = $request->only('email', 'password');
 		if (Auth::attempt($credentials)) {
@@ -24,7 +24,7 @@ class LoginRepository implements LoginInterface
 			return [false, 'Invalid credentials'];
 		}
 	}
-	public function logout()
+	public function logout(): bool
 	{
 		if (Auth::check()) {
 			Auth::logout();
@@ -32,7 +32,7 @@ class LoginRepository implements LoginInterface
 		}
 		return false;
 	}
-	public function register_req($request)
+	public function register_req($request): array
 	{
 		$already_registered = $this->user_model->where('email', $request['email'])->first();
 		if ($already_registered) {
@@ -44,7 +44,7 @@ class LoginRepository implements LoginInterface
 		Auth::login($user);
 		return [true, 'Registration Successfully'];
 	}
-	public static function assign_permission_to_user(User $user, int $role_id)
+	public static function assign_permission_to_user(User $user, int $role_id): bool
 	{
 		$roles = Role::where('user_level', $role_id)->get()->pluck("id");
 		$user->roles()->sync($roles);

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\AuthorContributorInterface;
 use App\Models\AuthorContributor;
+use Illuminate\Database\Eloquent\Collection;
 
 class AuthorContributorRepository implements AuthorContributorInterface
 {
@@ -11,18 +12,19 @@ class AuthorContributorRepository implements AuthorContributorInterface
 	{
 		// Your constructor code here
 	}
-	public function create($request, $paper_id)
+	public function create($request, $paper_id): bool
 	{
 		$request['paper_submission_id'] = $paper_id;
 		$this->author_contributor_model->create($request->except('_token'));
 		return true;
 	}
-	public function delete($id)
+	public function delete($id): bool
 	{
 		$this->author_contributor_model->where('id', $id)->delete();
 		return true;
 	}
-	public function get_by_paper_id($paper_id){
+	public function get_by_paper_id($paper_id): AuthorContributor | Collection
+	{
 		return $this->author_contributor_model->with('contributor_rule')->where('paper_submission_id', $paper_id)->get();
 	}
 }
