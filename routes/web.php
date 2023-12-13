@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('pages.welcome');
@@ -47,7 +46,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('all_submissions', 'all_submissions_page')->name('all_submissions_page');
         Route::get('assign-paper', 'reviewer_assign_page')->name('reviewer_assign_page');
     });
-
 
     Route::prefix('contributor')->controller(AuthorContributorController::class)->group(function () {
         Route::post('add', 'add_contributor')->name('add_contributor');
@@ -100,12 +98,10 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-
 Route::controller(LoginController::class)->group(function () {
     Route::get('login', 'login_page')->name('login');
     Route::post('login', 'login_req')->name('login_req');
     Route::get('register', 'register_page')->name('register');
     Route::post('register', 'register_req')->name('register_req');
-
     Route::get('logout', 'logout')->name('logout');
 });
