@@ -18,7 +18,7 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 	{
 		if ($request['paper_no'] == 'none') {
 			$today_no_of_papers = $this->paper_submission_model->where('start_date', date("Y-m-d"))->count();
-			$request['paper_no'] = config('constants.journal_stand_for') . "-" . date("dmy") . $today_no_of_papers + 1;
+			$request['paper_no'] = config('constants.journal_stand_for') . "-" . date("ymd") . $today_no_of_papers + 1;
 		}
 		$request['user_id'] = auth()->id();
 		$request['start_date'] = date("Y-m-d");
