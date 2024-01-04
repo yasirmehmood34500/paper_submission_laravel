@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\AssignReviewController;
-use App\Http\Controllers\AuthorContributorController;
-use App\Http\Controllers\AuthorContributorRuleController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\PaperSubmissionController;
-use App\Http\Controllers\RoleUserController;
-use App\Http\Controllers\SubmissionFileController;
-use App\Http\Controllers\SubmissionFileTypeController;
-use App\Http\Controllers\SubmissionRequirementController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RoleUserController;
+use App\Http\Controllers\ReviewTypeController;
+use App\Http\Controllers\AssignReviewController;
+use App\Http\Controllers\SubmissionFileController;
+use App\Http\Controllers\PaperSubmissionController;
+use App\Http\Controllers\AuthorContributorController;
+use App\Http\Controllers\SubmissionFileTypeController;
+use App\Http\Controllers\AuthorContributorRuleController;
+use App\Http\Controllers\SubmissionRequirementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('view', 'view')->name('contributor_rule_page');
         Route::get('delete/{id}', 'delete')->name('contributor_rule_delete');
         Route::post('add', 'add')->name('add_contributor_rule');
+    });
+
+    Route::prefix('review-type')->controller(ReviewTypeController::class)->group(function () {
+        Route::get('view', 'view')->name('review_type_page');
+        Route::get('delete/{id}', 'delete')->name('review_type_delete');
+        Route::post('add', 'add')->name('add_review_type');
     });
 
     Route::prefix('file-type')->controller(SubmissionFileTypeController::class)->group(function () {

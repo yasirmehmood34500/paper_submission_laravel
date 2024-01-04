@@ -115,6 +115,22 @@ class RoleSeeder extends Seeder
                 'key' => 'view_assign_paper',
                 'user_level' => User::REVIEWER,
             ],
+            [
+                'name' => 'View Review Type',
+                'key' => 'view_review_type',
+                'user_level' => User::ADMIN,
+            ],
+            [
+                'name' => 'Add Review Type',
+                'key' => 'add_review_type',
+                'user_level' => User::ADMIN,
+            ],
+            [
+                'name' => 'Delete Review Type',
+                'key' => 'delete_review_type',
+                'user_level' => User::ADMIN,
+            ],
+            
             
             
         ];

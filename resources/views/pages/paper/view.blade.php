@@ -11,6 +11,7 @@
         <div class="row sameheight-container">
             <table class="table table-striped">
                 <tr>
+                    <th>No</th>
                     <th>Paper no</th>
                     @can('view_all_submission')
                         <th>Email</th>
@@ -22,6 +23,7 @@
                 </tr>
                 @foreach ($my_submissions as $my_submission)
                     <tr>
+                        <td>{{ $loop->iteration }}</td>
                         <td>
                             @if ($my_submission->in_draft)
                                 <a

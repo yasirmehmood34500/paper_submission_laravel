@@ -96,6 +96,12 @@
                             <i class="fa fa-pencil-square-o"></i> Contributor Role </a>
                     </li>
                 @endif
+                @if (Gate::check('view_review_type') || Gate::check('add_review_type'))
+                    <li>
+                        <a href="{{ route('review_type_page') }}">
+                            <i class="fa fa-pencil-square-o"></i> Review Type </a>
+                    </li>
+                @endif
                 @if (Gate::check('add_paper_file_type') || Gate::check('view_paper_file_type'))
                     <li>
                         <a href="{{ route('file_type_page') }}">

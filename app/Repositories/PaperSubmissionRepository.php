@@ -21,6 +21,7 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 			$request['paper_no'] = config('constants.journal_stand_for') . "-" . date("dmy") . $today_no_of_papers + 1;
 		}
 		$request['user_id'] = auth()->id();
+		$request['start_date'] = date("Y-m-d");
 		return $this->paper_submission_model->updateOrCreate(
 			['id' => $id],
 			$request->except('_token')
@@ -32,7 +33,7 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 			['id' => $id],
 			[
 				'send_date' => date('Y-m-d'),
-				'in_draft' => 0
+				'in_draft' => 0,
 			]
 		);
 	}

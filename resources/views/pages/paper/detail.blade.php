@@ -13,9 +13,9 @@
                 <h2>{{ $paper->paper_no }}</h2>
             </div>
             <div class="col-md-6">
-                @can(['assign_to_review', 'view_all_submission'])
+                @if (Gate::check('assign_to_review') || Gate::check('view_all_submission'))
                     <button class="btn btn-primary assing_review_btn">Assign to Review</button>
-                @endcan
+                @endif
             </div>
         </div>
         <div class="assing_review_box d_none">
@@ -83,7 +83,7 @@
                 @endforeach
             </table>
         </div>
-        @can(['assign_to_review', 'view_all_submission'])
+        @if (Gate::check('assign_to_review') || Gate::check('view_all_submission'))
             <div class="row">
                 <h5>Assign Reviewers</h5>
                 <table class="table table-striped">
@@ -105,7 +105,26 @@
                     @endforeach
                 </table>
             </div>
-        @endcan
+        @endif
+        @if (Gate::check('view_assign_paper') || Gate::check('view_all_submission'))
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>Reply Comments</h5>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <label for="">Revision Type</label>
+                        <select name="review_type_id" id="" class="form-control">
+                            <option value="">Yes</option>
+                        </select>
+                        <label for="">Message</label>
+                        <textarea name="message" id="" cols="3" rows="3" class="form-control" required></textarea>
+                        <label for="">File</label>
+                        <input type="file" class="form-control" name="file">
+                        <br>
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </form>
+                </div>
+            </div>
+        @endif
 
     </section>
 @endsection

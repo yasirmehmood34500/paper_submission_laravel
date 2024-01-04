@@ -1,32 +1,32 @@
 @extends('layouts.main')
 @section('content')
     <section class="section">
-        <h4>Contributor Roles</h4>
+        <h4>Review Type</h4>
         <div class="row sameheight-container">
-            @can('add_contributor_rule')
+            @can('view_review_type')
                 <div class="col-md-4">
-                    <form action="{{ route('add_contributor_rule') }}" method="post">
+                    <form action="{{ route('add_review_type') }}" method="post">
                         @csrf
-                        <label for="">Role Name</label>
+                        <label for="">Type</label>
                         <input type="text" name="name" required="" class="form-control">
                         <br>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
             @endcan
-            @can('view_contributor_rule')
+            @can('add_review_type')
                 <div class="col-md-8">
                     <table class="table table-strip">
                         <tr>
-                            <th>Role</th>
+                            <th>Type</th>
                             <th>Delete</th>
                         </tr>
-                        @foreach ($contributor_rules as $contributor_rule)
+                        @foreach ($review_types as $review_type)
                             <tr>
-                                <td>{{ $contributor_rule->name }}</td>
+                                <td>{{ $review_type->name }}</td>
                                 <td>
-                                    @can('delete_contributor_rule')
-                                        <a href="{{ route('contributor_rule_delete', ['id' => $contributor_rule->id]) }}"
+                                    @can('delete_review_type')
+                                        <a href="{{ route('review_type_delete', ['id' => $review_type->id]) }}"
                                             class="btn btn-danger">Delete</a>
                                     @endcan
                                 </td>
