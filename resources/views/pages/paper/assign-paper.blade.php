@@ -19,7 +19,7 @@
                         </td>
                         <td>{{ @$assign_paper?->paper_submission?->title }}</td>
                         <td>R{{ @$assign_paper?->revision }}</td>
-                        <td>{{ @$assign_paper?->reply == 0 ? 'Pending' : 'Replied' }}</td>
+                        <td>{{ @$assign_paper?->review_type?->name ?? 'Pending' }}</td>
                         <td>
                             {{ Carbon\Carbon::parse($assign_paper->assign_date)->format('d M Y') }}
                         </td>

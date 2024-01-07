@@ -12,10 +12,7 @@
                     <a href="{{ route('home') }}">
                         <i class="fa fa-home"></i> Dashboard </a>
                 </li>
-                @if (Gate::check('view_all_submission') ||
-                        Gate::check('new_paper_submission') ||
-                        Gate::check('author_my_submission') ||
-                        Gate::check('view_assign_paper'))
+                @if (Gate::any(['new_paper_submission', 'author_my_submission', 'view_assign_paper', 'view_all_submission']))
                     <li>
                         <a href="#">
                             <i class="fa fa-th-large"></i> Paper
@@ -24,8 +21,15 @@
                         <ul class="sidebar-nav">
                             @can('view_all_submission')
                                 <li>
-                                    <a href="{{ route('all_submissions_page') }}"> Received </a>
+                                    <a href="{{ route('all_submissions_page') }}"> All Submission </a>
                                 </li>
+                                @foreach (App\Models\PaperSubmission::PAPER_STATUS as $key => $value)
+                                    <li>
+                                        <a href="{{ route('paper_status_wise', ['status' => $key + 1]) }}">
+                                            {{ $value }}
+                                        </a>
+                                    </li>
+                                @endforeach
                             @endcan
                             @can('new_paper_submission')
                                 <li>
@@ -48,7 +52,7 @@
                         </ul>
                     </li>
                 @endif
-                @if (Gate::check('view_author') || Gate::check('add_author'))
+                @if (Gate::any(['view_author', 'add_author']))
                     <li>
                         <a href="#">
                             <i class="fa fa-th-large"></i> Authors
@@ -68,7 +72,7 @@
                         </ul>
                     </li>
                 @endif
-                @if (Gate::check('view_reviewer') || Gate::check('add_reviewer'))
+                @if (Gate::any(['view_reviewer', 'add_reviewer']))
                     <li>
                         <a href="#">
                             <i class="fa fa-th-large"></i> Reviewers
@@ -90,25 +94,25 @@
                         </ul>
                     </li>
                 @endif
-                @if (Gate::check('add_contributor_rule') || Gate::check('view_contributor_rule'))
+                @if (Gate::any(['add_contributor_rule', 'view_contributor_rule']))
                     <li>
                         <a href="{{ route('contributor_rule_page') }}">
                             <i class="fa fa-pencil-square-o"></i> Contributor Role </a>
                     </li>
                 @endif
-                @if (Gate::check('view_review_type') || Gate::check('add_review_type'))
+                @if (Gate::any(['view_review_type', 'add_review_type']))
                     <li>
                         <a href="{{ route('review_type_page') }}">
                             <i class="fa fa-pencil-square-o"></i> Review Type </a>
                     </li>
                 @endif
-                @if (Gate::check('add_paper_file_type') || Gate::check('view_paper_file_type'))
+                @if (Gate::any(['add_paper_file_type', 'view_paper_file_type']))
                     <li>
                         <a href="{{ route('file_type_page') }}">
                             <i class="fa fa-pencil-square-o"></i> File Type </a>
                     </li>
                 @endif
-                @if (Gate::check('add_paper_submission_requirement') || Gate::check('view_paper_submission_requirement'))
+                @if (Gate::any(['add_paper_submission_requirement', 'view_paper_submission_requirement']))
                     <li>
                         <a href="{{ route('view_submissioin_requirement_page') }}">
                             <i class="fa fa-pencil-square-o"></i> Submission Requirement

@@ -18,9 +18,12 @@ class AuthorContributorRuleSeeder extends Seeder
             ['name' => 'Translator'],
         ];
         foreach ($contributor_rules as $key => $value) {
-            AuthorContributorRule::firstOrCreate(
-                ['name' => $value['name']]
-            );
+            $already = AuthorContributorRule::withTrashed()->where('name', $value['name'])->first();
+            if (!$already) {
+                AuthorContributorRule::firstOrCreate(
+                    ['name' => $value['name']]
+                );
+            }
         }
     }
 }

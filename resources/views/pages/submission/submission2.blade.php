@@ -14,18 +14,19 @@
         <h4>Submission Metadata ({{ @$submission_paper?->paper_no }})</h4>
         <form action="{{ route('submission_step_2_req') }}" method="post">
             @csrf
-            <input type="hidden" name="paper_no" value="{{ @$submission_paper?->paper_no ?: 'none' }}">
+            <input type="hidden" name="paper_no" value="{{ @$submission_paper?->paper_no ?? 'none' }}">
             <div class="sameheight-container">
-                <label for="">Prefix</label>
-                <input type="text" name="prefix" required="" value="{{ @$submission_paper?->prefix }}" class="form-control" min="3">
+                {{-- <label for="">Prefix</label>
+                <input type="text" name="prefix" required="" value="{{ @$submission_paper?->prefix }}" class="form-control" min="3"> --}}
                 <label for="">Title</label>
                 <input type="text" name="title" required="" value="{{ @$submission_paper?->title }}" class="form-control" min="10">
                 <label for="">Sub Title</label>
                 <input type="text" name="sub_title" required="" value="{{ @$submission_paper?->sub_title }}" class="form-control" min="5">
                 <label for="">Abstract</label>
-                <textarea name="abstract" id="" cols="3" rows="3" required="" class="form-control">{{ @$submission_paper?->abstract }}</textarea>
+                <textarea name="abstract" id="" cols="3" rows="3" required="" class="form-control">{{ @$submission_paper?->abstract ?? '' }}</textarea>
                 <label for="">Keywords</label>
                 <input type="text" name="keywords" required="" value="{{ @$submission_paper?->keywords }}" class="form-control" min="3">
+            </div>
             <br>
             <div class="row">
                 <div class="col-md-6"></div>

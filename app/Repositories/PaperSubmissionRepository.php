@@ -64,6 +64,15 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 	}
 	public function all_submissions(): PaperSubmission | Collection
 	{
-		return $this->paper_submission_model->with('user')->where('in_draft', 0)->orderBy('id', 'DESC')->get();
+		return $this->paper_submission_model->with('user')->where('in_draft', 0)->orderBy('send_date', 'DESC')->get();
+	}
+	public function paper_status_wise($status): PaperSubmission | Collection
+	{
+		return $this->paper_submission_model->with('user')->where('in_draft', 0)->where('status', $status)->orderBy('send_date', 'DESC')->get();
+	}
+	public function revision_reply_send($request): bool
+	{
+		$this->paper_submission_model->where('user_id', auth()->id())->where('id', $request['paper_id'])->update(['status' => $this->paper_submission_model::PENDING_FROM_EDITOR_STATUS]);
+		return true;
 	}
 }

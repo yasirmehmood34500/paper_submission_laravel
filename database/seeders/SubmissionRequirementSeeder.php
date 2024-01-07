@@ -31,12 +31,15 @@ class SubmissionRequirementSeeder extends Seeder
             ],
         ];
         foreach ($submission_requirements as $key => $value) {
-            SubmissionRequirement::firstOrCreate(
-                ['text' => $value['text']],
-                [
-                    'text' => $value['text'],
-                ]
-            );
+            $already = SubmissionRequirement::withTrashed()->where('text', $value['text'])->first();
+            if (!$already) {
+                SubmissionRequirement::firstOrCreate(
+                    ['text' => $value['text']],
+                    [
+                        'text' => $value['text'],
+                    ]
+                );
+            }
         }
     }
 }

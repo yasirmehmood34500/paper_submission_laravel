@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Interfaces\AdminDecisionInterface;
 use App\Interfaces\RoleInterface;
 use App\Interfaces\UserInterface;
 use App\Interfaces\LoginInterface;
@@ -26,6 +27,7 @@ use App\Repositories\PaperSubmissionRepository;
 use App\Repositories\AuthorContributorRepository;
 use App\Interfaces\AuthorContributorRuleInterface;
 use App\Interfaces\SubmissionRequirementInterface;
+use App\Repositories\AdminDecisionRepository;
 use App\Repositories\SubmissionFileTypeRepository;
 use App\Repositories\AuthorContributorRuleRepository;
 use App\Repositories\SubmissionRequirementRepository;
@@ -58,5 +60,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RoleUserInterface::class, RoleUserRepository::class);
         $this->app->bind(AssignReviewInterface::class, AssignReviewRepository::class);
         $this->app->bind(ReviewTypeInterface::class, ReviewTypeRepository::class);
+        $this->app->bind(AdminDecisionInterface::class, AdminDecisionRepository::class);
     }
 }

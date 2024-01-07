@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\AdminDecisionInterface;
 use App\Interfaces\AssignReviewInterface;
 use App\Interfaces\AuthorContributorInterface;
 use App\Interfaces\AuthorContributorRuleInterface;
 use App\Interfaces\PaperSubmissionInterface;
+use App\Interfaces\ReviewTypeInterface;
 use App\Interfaces\SubmissionFileInterface;
 use App\Interfaces\SubmissionFileTypeInterface;
 use App\Interfaces\SubmissionRequirementInterface;
@@ -23,6 +25,8 @@ class PaperSubmissionController extends Controller
 		protected SubmissionFileTypeInterface $submission_file_type_interface,
 		protected SubmissionRequirementInterface $submission_requirement_interface,
 		protected AssignReviewInterface $assign_review_interface,
+		protected ReviewTypeInterface $review_type_interface,
+		protected AdminDecisionInterface $admin_decision_interface,
 	) {
 		//
 	}
@@ -107,6 +111,9 @@ class PaperSubmissionController extends Controller
 			'paper_files' => $this->submission_file_interface->get_by_paper_id($paper->id),
 			'assign_reviewers' => $this->assign_review_interface->get_by_paper_id($paper->id),
 			'allow_revision_file_no' => $this->assign_review_interface->revision_no_of_assign_paper($paper->id),
+			'review_types' => $this->review_type_interface->all(),
+			'paper_file_types' => $this->submission_file_type_interface->all(),
+			'admin_decisions' => $this->admin_decision_interface->get_by_paper_id($paper->id)
 		]);
 	}
 	public function continue_draft($id)
@@ -159,6 +166,15 @@ class PaperSubmissionController extends Controller
 		]);
 	}
 
+	public function paper_status_wise($status)
+	{
+		$this->authorize('view_all_submission');
+		return view('pages.paper.view')->with([
+			'meta_title' => 'Status Wise',
+			'my_submissions' => $this->paper_submission_interface->paper_status_wise($status - 1),
+		]);
+	}
+
 	public function reviewer_assign_page()
 	{
 		$this->authorize('view_assign_paper');
@@ -166,5 +182,22 @@ class PaperSubmissionController extends Controller
 			'meta_title' => 'Assign Paper',
 			'assign_papers' => $this->assign_review_interface->view_reviewer_assign_paper(),
 		]);
+	}
+	public function reviewer_reply_paper(Request $request)
+	{
+		$this->authorize('view_assign_paper');
+		$this->assign_review_interface->reviewer_reply_paper($request);
+		return back();
+	}
+	public function revision_send_to_author(Request $request)
+	{
+		$this->AllowPermission(['view_all_submission', 'reply_to_author']);
+		$this->admin_decision_interface->revision_send_to_author($request);
+		return back();
+	}
+	public function revision_reply_send(Request $request)
+	{
+		$this->paper_submission_interface->revision_reply_send($request);
+		return back();
 	}
 }

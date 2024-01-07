@@ -20,9 +20,12 @@ class SubmissionFileTypeSeeder extends Seeder
             ['name' => 'Introduction'],
         ];
         foreach ($file_types as $key => $value) {
-            SubmissionFileType::firstOrCreate(
-                ['name' => $value['name']]
-            );
+            $already = SubmissionFileType::withTrashed()->where('name', $value['name'])->first();
+            if (!$already) {
+                SubmissionFileType::firstOrCreate(
+                    ['name' => $value['name']]
+                );
+            }
         }
     }
 }

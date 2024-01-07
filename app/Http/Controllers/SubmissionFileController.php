@@ -20,18 +20,43 @@ class SubmissionFileController extends Controller
 		if ($request->hasFile('file_name')) {
 			$file = $request->file('file_name');
 			$path = 'uploads/submission/';
-			$filename = uniqid() . '.' . $file->getClientOriginalExtension();
+			$filename = time() . uniqid() . '.' . $file->getClientOriginalExtension();
 			if (!Storage::exists($path)) {
 				Storage::makeDirectory($path);
 			}
 			$file->move(storage_path('app/public/' . $path), $filename);
 			$paper = $this->paper_submission_interface->get_by_id(paper_id: session('paper_submission_id'));
-			SubmissionFile::create([
-				'paper_submission_id' => session('paper_submission_id'),
-				'file_name' => $filename,
-				'submission_file_type_id' => $request->submission_file_type_id,
-				'revision' => $paper->revision,
-			]);
+			if ($paper) {
+				SubmissionFile::create([
+					'paper_submission_id' => session('paper_submission_id'),
+					'file_name' => $filename,
+					'submission_file_type_id' => $request->submission_file_type_id,
+					'revision' => $paper->revision,
+				]);
+			}
+		}
+		return back();
+	}
+	public function revision_upload_file(Request $request)
+	{
+		$this->authorize('new_paper_submission');
+		if ($request->hasFile('file_name')) {
+			$file = $request->file('file_name');
+			$path = 'uploads/submission/';
+			$filename = time() . uniqid() . '.' . $file->getClientOriginalExtension();
+			if (!Storage::exists($path)) {
+				Storage::makeDirectory($path);
+			}
+			$file->move(storage_path('app/public/' . $path), $filename);
+			$paper = $this->paper_submission_interface->get_by_id(paper_id: $request->paper_id);
+			if ($paper) {
+				SubmissionFile::create([
+					'paper_submission_id' => $paper->id,
+					'file_name' => $filename,
+					'submission_file_type_id' => $request->submission_file_type_id,
+					'revision' => $paper->revision,
+				]);
+			}
 		}
 		return back();
 	}

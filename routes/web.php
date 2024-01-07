@@ -44,9 +44,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('view/{in_draft?}', 'my_submission')->name('my_submission');
         Route::get('continue-draft/{id}', 'continue_draft')->name('continue_draft');
 
-
+        Route::get('paper-status/{status}', 'paper_status_wise')->name('paper_status_wise');
         Route::get('all_submissions', 'all_submissions_page')->name('all_submissions_page');
         Route::get('assign-paper', 'reviewer_assign_page')->name('reviewer_assign_page');
+
+        Route::post('reply-review', 'reviewer_reply_paper')->name('reviewer_reply_paper');
+        Route::post('revision-send-to-author', 'revision_send_to_author')->name('revision_send_to_author');
+        Route::post('revision-reply-send', 'revision_reply_send')->name('revision_reply_send');
     });
 
 
@@ -75,6 +79,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('file')->controller(SubmissionFileController::class)->group(function () {
         Route::post('upload', 'upload_file')->name('upload_file');
+        Route::post('upload-revision', 'revision_upload_file')->name('revision_upload_file');
         Route::get('delete/{id}', 'delete_file')->name('delete_file');
     });
 

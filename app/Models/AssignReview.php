@@ -14,7 +14,9 @@ class AssignReview extends Model
         'user_id',
         'paper_submission_id',
         'revision',
-        'reply',
+        'review_type_id',
+        'comment',
+        'file',
         'assign_date',
     ];
 
@@ -36,5 +38,15 @@ class AssignReview extends Model
     public function paper_submission(): BelongsTo
     {
         return $this->belongsTo(PaperSubmission::class);
+    }
+
+    /**
+     * Get the review_type that owns the AssignReview
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function review_type(): BelongsTo
+    {
+        return $this->belongsTo(ReviewType::class);
     }
 }

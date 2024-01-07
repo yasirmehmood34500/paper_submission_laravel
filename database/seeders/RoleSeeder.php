@@ -130,9 +130,14 @@ class RoleSeeder extends Seeder
                 'key' => 'delete_review_type',
                 'user_level' => User::ADMIN,
             ],
-            
-            
-            
+            [
+                'name' => 'Reply to Author',
+                'key' => 'reply_to_author',
+                'user_level' => User::ADMIN,
+            ],
+
+
+
         ];
         foreach ($roles as $value) {
             Role::updateOrCreate(

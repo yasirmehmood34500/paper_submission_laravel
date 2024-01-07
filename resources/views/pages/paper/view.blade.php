@@ -3,7 +3,11 @@
     <section class="section">
         <h2>
             @can('view_all_submission')
-                All Submissions
+                @if (request()->route('status'))
+                    {{ App\Models\PaperSubmission::PAPER_STATUS[request()->route('status') - 1] }}
+                @else
+                    All Submissions
+                @endif
             @else
                 My {{ request()->route('in_draft') == 1 ? 'Draft' : 'Sended' }}
             @endcan

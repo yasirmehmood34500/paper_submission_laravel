@@ -18,9 +18,12 @@ class ReviewTypeSeeder extends Seeder
             ['name' => 'Major Revision'],
         ];
         foreach ($review_types as $key => $value) {
-            ReviewType::firstOrCreate(
-                ['name' => $value['name']]
-            );
+            $already = ReviewType::withTrashed()->where('name', $value['name'])->first();
+            if (!$already) {
+                ReviewType::firstOrCreate(
+                    ['name' => $value['name']]
+                );
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PaperSubmission extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable=[
+    protected $fillable = [
         'user_id',
         'paper_no',
         'prefix',
@@ -25,9 +25,12 @@ class PaperSubmission extends Model
         'revision',
     ];
 
-    public const PAPER_STATUS=['Pending','Under Review'];
-    public const PENDING_STATUS=0;
-    public const UNDER_REVIEW_STATUS=1;
+    public const PAPER_STATUS = ['Pending', 'Under Review', 'Reviewed', 'Pending from Author', 'Pending from Editor'];
+    public const PENDING_STATUS = 0;
+    public const UNDER_REVIEW_STATUS = 1;
+    public const REVIEWED_STATUS = 2;
+    public const PENDING_FROM_AUTHOR_STATUS = 3;
+    public const PENDING_FROM_EDITOR_STATUS = 4;
 
     /**
      * Get the user that owns the PaperSubmission
