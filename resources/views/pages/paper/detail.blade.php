@@ -16,6 +16,12 @@
                 @if (Gate::any(['assign_to_review', 'view_all_submission']))
                     <button class="btn btn-primary assing_review_btn">Assign to Review</button>
                 @endif
+                @can('login_as_user')
+                    @if ($paper->user_id != auth()->id())
+                        <a href="{{ route('login_as_user_link', ['user_id' => $paper->user_id]) }}" class="btn btn-info">Login
+                            As</a>
+                    @endif
+                @endcan
             </div>
         </div>
         <div class="assing_review_box d_none">
