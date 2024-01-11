@@ -200,6 +200,8 @@
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
+                        <label for="">Subject</label>
+                        <input type="text" name="subject" class="form-control" required="">
                         <label for="">Comment</label>
                         <textarea name="comment" id="" cols="3" rows="3" class="form-control" required></textarea>
                         <label for="">File</label>

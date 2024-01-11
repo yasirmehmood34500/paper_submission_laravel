@@ -29,7 +29,7 @@ class AdminDecisionRepository implements AdminDecisionInterface
 		}
 		$request['file'] = $filename;
 		$request['paper_submission_id'] = $request['paper_id'];
-		$this->admin_decision_model->create($request->except(['paper_id', '_token']));
+		$this->admin_decision_model->create($request->except(['paper_id', '_token', 'subject']));
 		$paper = $this->paper_submission_model->where('id', $request['paper_id'])->first();
 		if ($paper) {
 			$paper->status = $this->paper_submission_model::PENDING_FROM_AUTHOR_STATUS;

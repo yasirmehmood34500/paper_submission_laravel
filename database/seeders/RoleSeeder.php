@@ -135,6 +135,11 @@ class RoleSeeder extends Seeder
                 'key' => 'reply_to_author',
                 'user_level' => User::ADMIN,
             ],
+            [
+                'name' => 'Login As User',
+                'key' => 'login_as_user',
+                'user_level' => User::ADMIN,
+            ],
 
 
 

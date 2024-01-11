@@ -11,6 +11,8 @@ use App\Interfaces\ReviewTypeInterface;
 use App\Interfaces\SubmissionFileInterface;
 use App\Interfaces\SubmissionFileTypeInterface;
 use App\Interfaces\SubmissionRequirementInterface;
+use App\Interfaces\UserInterface;
+use App\Mail\AdminDecisionEmail;
 use App\Mail\PaperSubmissionEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -27,6 +29,7 @@ class PaperSubmissionController extends Controller
 		protected AssignReviewInterface $assign_review_interface,
 		protected ReviewTypeInterface $review_type_interface,
 		protected AdminDecisionInterface $admin_decision_interface,
+		protected UserInterface $user_nterface
 	) {
 		//
 	}
@@ -192,7 +195,12 @@ class PaperSubmissionController extends Controller
 	public function revision_send_to_author(Request $request)
 	{
 		$this->AllowPermission(['view_all_submission', 'reply_to_author']);
-		$this->admin_decision_interface->revision_send_to_author($request);
+		$paper = $this->submission_file_interface->get_by_paper_id($request->paper_id);
+		if ($paper) {
+			$author = $this->user_nterface->single($paper->user_id);
+			$this->admin_decision_interface->revision_send_to_author($request);
+			Mail::to($author->email)->send(new AdminDecisionEmail($request->subject, $request->comment, $author->name));
+		}
 		return back();
 	}
 	public function revision_reply_send(Request $request)

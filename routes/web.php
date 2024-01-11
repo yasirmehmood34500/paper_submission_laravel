@@ -94,6 +94,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('view', 'view_reviewer')->name('view_reviewer_page');
         Route::get('add', 'add_reviewer_page')->name('add_reviewer_page');
         Route::post('add', 'add_reviewer_req')->name('add_reviewer_req');
+        Route::get('login-as-user/{user_id}', 'login_as_user_link')->name('login_as_user_link');
+        
     });
 
     Route::prefix('assign-permission')->controller(RoleUserController::class)->group(function () {

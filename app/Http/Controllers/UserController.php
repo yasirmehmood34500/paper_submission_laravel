@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Interfaces\UserInterface;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -66,5 +67,11 @@ class UserController extends Controller
 		return response()->json([
 			'user' => $this->user_interface->search_user_by_level(user_level: User::REVIEWER, search: $request->text)
 		]);
+	}
+	public function login_as_user_link($user_id)
+	{
+		$this->authorize('login_as_user');
+		Auth::loginUsingId($user_id);
+		return to_route('home');
 	}
 }
