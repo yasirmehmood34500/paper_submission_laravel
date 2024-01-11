@@ -5,7 +5,7 @@
                     </button>
                 </div>
                 <div class="header-block header-block-search">
-                    <h1>{{ config('constants.journal_name') }} ({{ config('constants.journal_stand_for') }})</h1>
+                    <h4>{{ config('constants.journal_name') }} ({{ config('constants.journal_stand_for') }})</h4>
                     {{-- <form role="search">
                         <div class="input-container">
                             <i class="fa fa-search"></i>

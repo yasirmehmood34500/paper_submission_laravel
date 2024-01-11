@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\LoginInterface;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -37,7 +38,11 @@ class LoginController extends Controller
 		$request->validate($rules);
 		$resp = $this->loginInterface->login_req($request);
 		if ($resp[0]) {
-			return redirect()->route('home');
+			if (auth()->user()->user_level == User::ADMIN) {
+				return to_route('all_submissions_page');
+			} else {
+				return redirect()->route('home');
+			}
 		} else {
 			return back()->with('error', $resp[1]);
 		}
