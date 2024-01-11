@@ -195,7 +195,7 @@ class PaperSubmissionController extends Controller
 	public function revision_send_to_author(Request $request)
 	{
 		$this->AllowPermission(['view_all_submission', 'reply_to_author']);
-		$paper = $this->submission_file_interface->get_by_paper_id($request->paper_id);
+		$paper = $this->paper_submission_interface->get_by_id($request->paper_id);
 		if ($paper) {
 			$author = $this->user_nterface->single($paper->user_id);
 			$this->admin_decision_interface->revision_send_to_author($request);
