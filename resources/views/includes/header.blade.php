@@ -5,13 +5,14 @@
                     </button>
                 </div>
                 <div class="header-block header-block-search">
-                    <form role="search">
+                    <h1>{{ config('constants.journal_name') }} ({{ config('constants.journal_stand_for') }})</h1>
+                    {{-- <form role="search">
                         <div class="input-container">
                             <i class="fa fa-search"></i>
                             <input type="search" placeholder="Search">
                             <div class="underline"></div>
                         </div>
-                    </form>
+                    </form> --}}
                 </div>
                 {{-- <div class="header-block header-block-buttons">
                     <a href="https://github.com/modularcode/modular-admin-html" class="btn btn-sm header-btn">

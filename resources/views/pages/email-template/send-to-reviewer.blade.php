@@ -29,7 +29,9 @@
         <li><a href="{{ config('constants.journal_url') }}">Login Link</a></li>
         <li>Dr. / Prof. {{ $name }}</li>
     </ol>
-    <p>Regards Azahr Editorial Assistant </p>
+    <p>Regards</p>
+    <p>Azhar</p>
+    <p>Editorial Assistant</p>
     <p>Journal of Global Innovations in Agricultural Sciences (JGIAS)</p>
 </body>
 
