@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->integer('paper_submission_id')->nullable();
             $table->integer('review_type_id')->nullable()->default(0);
-            $table->string('comment')->nullable();
-            $table->string('file')->nullable();
+            $table->string('comment', 1000)->nullable();
+            $table->string('file', 200)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
