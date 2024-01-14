@@ -125,10 +125,12 @@
                                 <td>{{ $admin_decision->comment }}</td>
                                 <td>
                                     @if ($admin_decision->file != '')
-                                        <a href="{{ asset('storage/uploads/admin_reply') }}/{{ $admin_decision->file }}"
-                                            download="">Download</a>
+                                        @foreach (explode(',', $admin_decision->file) as $single_file)
+                                            <a href="{{ asset('storage/uploads/admin_reply') }}/{{ $single_file }}"
+                                                download="">Download</a><br>
+                                        @endforeach
                                     @else
-                                        No File
+                                        No Files
                                     @endif
                                 </td>
                                 <td>
