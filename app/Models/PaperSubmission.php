@@ -26,7 +26,7 @@ class PaperSubmission extends Model
         'revision',
     ];
 
-    public const PAPER_STATUS = ['Pending', 'Under Review', 'Reviewed', 'Pending from Author', 'Pending from Editor'];
+    public const PAPER_STATUS = ['Pending', 'Under Review', 'Reviewed', 'Pending on Author', 'Pending on Editor'];
     public const PENDING_STATUS = 0;
     public const UNDER_REVIEW_STATUS = 1;
     public const REVIEWED_STATUS = 2;
