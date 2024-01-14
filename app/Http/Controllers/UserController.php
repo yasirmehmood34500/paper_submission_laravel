@@ -74,4 +74,13 @@ class UserController extends Controller
 		Auth::loginUsingId($user_id);
 		return to_route('home');
 	}
+	public function update_password()
+	{
+		return view('pages.profile-setting.update-password');
+	}
+	public function update_password_req(Request $request)
+	{
+		$rres = $this->user_interface->update_password($request);
+		return back()->with('error', $rres ? 'Password Updated' : 'Both Password Should be same');
+	}
 }

@@ -24,7 +24,9 @@ class SubmissionFileController extends Controller
 			if (!Storage::exists($path)) {
 				Storage::makeDirectory($path);
 			}
-			$file->move(storage_path('app/public/' . $path), $filename);
+			if (config('app.env') == 'production') {
+				$file->move(storage_path('app/public/' . $path), $filename);
+			}
 			$paper = $this->paper_submission_interface->get_by_id(paper_id: session('paper_submission_id'));
 			if ($paper) {
 				SubmissionFile::create([
@@ -47,7 +49,9 @@ class SubmissionFileController extends Controller
 			if (!Storage::exists($path)) {
 				Storage::makeDirectory($path);
 			}
-			$file->move(storage_path('app/public/' . $path), $filename);
+			if (config('app.env') == 'production') {
+				$file->move(storage_path('app/public/' . $path), $filename);
+			}
 			$paper = $this->paper_submission_interface->get_by_id(paper_id: $request->paper_id);
 			if ($paper) {
 				SubmissionFile::create([

@@ -26,7 +26,9 @@ class AdminDecisionRepository implements AdminDecisionInterface
 			}
 			foreach ($files as $file) {
 				$filename = time() . uniqid() . '.' . $file->getClientOriginalExtension();
-				$file->move(storage_path('app/public/' . $path), $filename);
+				if (config('app.env') == 'production') {
+					$file->move(storage_path('app/public/' . $path), $filename);
+				}
 				$filenames = $filenames . $filename . ",";
 			}
 		}

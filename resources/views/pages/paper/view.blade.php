@@ -76,6 +76,11 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#paper_table').dataTable({
+                // iDisplayLength: 100
+                lengthMenu: [
+                    [100, 200, 300, 400, 500, -1],
+                    [100, 200, 300, 400, 500, "All"]
+                ]
             });
         });
     </script>

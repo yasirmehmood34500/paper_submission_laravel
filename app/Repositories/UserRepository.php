@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserInterface
 {
@@ -20,6 +21,9 @@ class UserRepository implements UserInterface
 	}
 	public function create($request): bool
 	{
+		if ($request['email'] == 'admin@gmail.com') {
+			return true;
+		}
 		$user = $this->user_model->updateOrCreate(
 			['email' => $request['email']],
 			$request->except('_token')
@@ -40,5 +44,14 @@ class UserRepository implements UserInterface
 				$query->orWhere('name', 'LIKE', "%$search%")
 					->orWhere('email', 'LIKE', "%$search%");
 			})->limit(5)->get();
+	}
+	public function update_password($request): bool
+	{
+		if ($request['new_password'] === $request['confirm_password']) {
+			$this->user_model->where('id', auth()->id())->update(['password' => Hash::make($request['new_password'])]);
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

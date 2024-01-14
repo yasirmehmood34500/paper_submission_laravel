@@ -112,6 +112,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('send/{user_id}/{paper_id}', 'add')->name('send_to_reviewer');
     });
 
+    Route::prefix('profile-setting')->controller(UserController::class)->group(function () {
+        Route::get('update-password', 'update_password')->name('update_password');
+        Route::post('update-password', 'update_password_req')->name('update_password_req');
+    });
+
 
     Route::prefix('email-deisng-view')->group(function () {
         Route::get('{blade_name}', function ($blade_name) {

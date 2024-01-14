@@ -52,7 +52,9 @@ class AssignReviewRepository implements AssignReviewInterface
 				if (!Storage::exists($path)) {
 					Storage::makeDirectory($path);
 				}
-				$file->move(storage_path('app/public/' . $path), $filename);
+				if (config('app.env') == 'production') {
+					$file->move(storage_path('app/public/' . $path), $filename);
+				}
 			}
 			$replied_paper->review_type_id = $request['review_type_id'];
 			$replied_paper->comment = $request['comment'];
