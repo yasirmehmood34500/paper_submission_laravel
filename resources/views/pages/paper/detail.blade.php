@@ -55,7 +55,9 @@
                 <p>{{ $paper->keywords }}</p>
                 @if (Gate::check('view_all_submission') || $paper->user_id == auth()->id())
                     <b>Comment for Editor:</b>
-                    <p>{{ $paper->comment_for_editor }}</p>
+                    <p>
+                        <pre>{{ $paper->comment_for_editor }}</pre>
+                    </p>
                 @endif
                 <div class="pull-right">
                     @can('login_as_user')
@@ -122,7 +124,9 @@
                         @foreach ($admin_decisions as $admin_decision)
                             <tr>
                                 <td>{{ $admin_decision->review_type->name }}</td>
-                                <td>{{ $admin_decision->comment }}</td>
+                                <td>
+                                    <pre>{{ $admin_decision->comment }}</pre>
+                                </td>
                                 <td>
                                     @if ($admin_decision->file != '')
                                         @foreach (explode(',', $admin_decision->file) as $single_file)
