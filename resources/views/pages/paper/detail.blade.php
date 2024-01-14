@@ -22,7 +22,8 @@
             </div>
             <div class="col-md-6">
                 <div class="pull-right">
-                    @if (Gate::any(['assign_to_review', 'view_all_submission']))
+                    @if (Gate::any(['assign_to_review', 'view_all_submission']) &&
+                            $paper->status != App\Models\PaperSubmission::PENDING_FROM_AUTHOR_STATUS)
                         <button class="btn btn-primary assing_review_btn">Assign to Review</button>
                     @endif
                 </div>
