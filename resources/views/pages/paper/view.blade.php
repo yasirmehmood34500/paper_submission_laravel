@@ -12,7 +12,7 @@
                     All Submissions
                 @endif
             @else
-                My {{ request()->route('in_draft') == 1 ? 'Draft' : 'Sended' }}
+                My {{ request()->route('in_draft') == 1 ? 'Draft' : 'Submission' }}
             @endcan
         </h2>
         <div class="sameheight-container">

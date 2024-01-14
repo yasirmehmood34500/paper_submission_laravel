@@ -17,17 +17,20 @@ class AdminDecisionRepository implements AdminDecisionInterface
 	}
 	public function revision_send_to_author($request): bool
 	{
-		$filename = "";
+		$filenames = " ";
 		if ($request->hasFile('file_name')) {
-			$file = $request->file('file_name');
+			$files = $request->file('file_name');
 			$path = 'uploads/admin_reply/';
-			$filename = time() . uniqid() . '.' . $file->getClientOriginalExtension();
 			if (!Storage::exists($path)) {
 				Storage::makeDirectory($path);
 			}
-			$file->move(storage_path('app/public/' . $path), $filename);
+			foreach ($files as $file) {
+				$filename = time() . uniqid() . '.' . $file->getClientOriginalExtension();
+				$file->move(storage_path('app/public/' . $path), $filename);
+				$filenames = $filenames . $filename . ",";
+			}
 		}
-		$request['file'] = $filename;
+		$request['file'] = trim(mb_substr($filenames, 0, -1));
 		$request['paper_submission_id'] = $request['paper_id'];
 		$this->admin_decision_model->create($request->except(['paper_id', '_token', 'subject']));
 		$paper = $this->paper_submission_model->where('id', $request['paper_id'])->first();

@@ -18,6 +18,7 @@ class PaperSubmission extends Model
         'sub_title',
         'abstract',
         'keywords',
+        'comment_for_editor',
         'in_draft',
         'start_date',
         'send_date',

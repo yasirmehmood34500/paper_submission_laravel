@@ -21,7 +21,7 @@
                         <ul class="sidebar-nav">
                             @can('view_all_submission')
                                 <li>
-                                    <a href="{{ route('all_submissions_page') }}"> All Submission </a>
+                                    <a href="{{ route('all_submissions_page') }}"> All Papers </a>
                                 </li>
                                 @foreach (App\Models\PaperSubmission::PAPER_STATUS as $key => $value)
                                     <li>
@@ -33,15 +33,15 @@
                             @endcan
                             @can('new_paper_submission')
                                 <li>
-                                    <a href="{{ route('submission_step_1') }}"> New </a>
+                                    <a href="{{ route('submission_step_1') }}"> New Submission</a>
                                 </li>
                             @endcan
                             @can('author_my_submission')
                                 <li>
-                                    <a href="{{ route('my_submission', ['in_draft' => 1]) }}"> Draft </a>
+                                    <a href="{{ route('my_submission', ['in_draft' => 1]) }}">My Draft </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('my_submission') }}"> Sended </a>
+                                    <a href="{{ route('my_submission') }}"> My Submission </a>
                                 </li>
                             @endcan
                             @can('view_assign_paper')

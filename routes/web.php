@@ -95,7 +95,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('add', 'add_reviewer_page')->name('add_reviewer_page');
         Route::post('add', 'add_reviewer_req')->name('add_reviewer_req');
         Route::get('login-as-user/{user_id}', 'login_as_user_link')->name('login_as_user_link');
-        
     });
 
     Route::prefix('assign-permission')->controller(RoleUserController::class)->group(function () {
@@ -111,6 +110,18 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('assign-to-reviewer')->controller(AssignReviewController::class)->group(function () {
         Route::get('send/{user_id}/{paper_id}', 'add')->name('send_to_reviewer');
+    });
+
+
+    Route::prefix('email-deisng-view')->group(function () {
+        Route::get('{blade_name}', function ($blade_name) {
+            return view("pages.email-template." . $blade_name)->with([
+                'name' => "Yasir",
+                "comment" => "Comment",
+                "title" => "Paper Title",
+                "paper_no" => "Paper No",
+            ]);
+        });
     });
 });
 

@@ -26,6 +26,8 @@
                 <textarea name="abstract" id="" cols="3" rows="3" required="" class="form-control">{{ @$submission_paper?->abstract ?? '' }}</textarea>
                 <label for="">Keywords</label>
                 <input type="text" name="keywords" required="" value="{{ @$submission_paper?->keywords }}" class="form-control" min="3">
+                <label for="">Comment for Editor</label>
+                <textarea name="comment_for_editor" id="" cols="30" rows="5" class="form-control"></textarea>
             </div>
             <br>
             <div class="row">

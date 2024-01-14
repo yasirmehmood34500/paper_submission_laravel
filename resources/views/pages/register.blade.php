@@ -51,6 +51,10 @@
                             </p>
                         </div>
                     </form>
+                    <div class="text-center">
+                        Developed by
+                        <a href="https://timetechsol.com" target="_blank">TimeTechSol</a>
+                    </div>
                 </div>
             </div>
         </div>
