@@ -109,7 +109,7 @@
                 </table>
             </div>
 
-            @if ($paper->user_id == auth()->id())
+            @if (Gate::any(['view_all_submission']) || $paper->user_id == auth()->id())
                 <div class="block col-md-12">
                     <h5>Editor Decision</h5>
                     <table class="table table-striped">
