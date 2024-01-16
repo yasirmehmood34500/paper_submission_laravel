@@ -156,7 +156,12 @@ class PaperSubmissionController extends Controller
 		$this->authorize('new_paper_submission');
 		$paper = $this->paper_submission_interface->submit_update_paper_with_id($request, session('paper_submission_id'));
 		session()->forget('paper_submission_id');
-		Mail::to(auth()->user()->email)->send(new PaperSubmissionEmail($paper->paper_no, $paper->title, auth()->user()->name));
+		if (config('app.env') == 'production') {
+			try {
+				Mail::to(auth()->user()->email)->send(new PaperSubmissionEmail($paper->paper_no, $paper->title, auth()->user()->name));
+			} catch (\Throwable $th) {
+			}
+		}
 		return redirect()->route('my_submission');
 	}
 
@@ -199,7 +204,12 @@ class PaperSubmissionController extends Controller
 		if ($paper) {
 			$author = $this->user_nterface->single($paper->user_id);
 			$this->admin_decision_interface->revision_send_to_author($request);
-			Mail::to($author->email)->send(new AdminDecisionEmail($request->subject, $request->comment, $author->name));
+			if (config('app.env') == 'production') {
+				try {
+					Mail::to($author->email)->send(new AdminDecisionEmail($request->subject, $request->comment, $author->name));
+				} catch (\Throwable $th) {
+				}
+			}
 		}
 		return back();
 	}

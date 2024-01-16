@@ -26,8 +26,7 @@
                         @endcan
                         <th>Title</th>
                         <th>Status</th>
-                        <th>Start Date</th>
-                        <th>Submit Date</th>
+                        <th>Submited Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,13 +54,10 @@
                                 @endif
                             </td>
                             <td>
-                                {{ Carbon\Carbon::parse($my_submission->start_date)->format('d M Y') }}
-                            </td>
-                            <td>
                                 @if ($my_submission->in_draft)
                                     Not Submitted
                                 @else
-                                    {{ Carbon\Carbon::parse($my_submission->send_date)->format('d M Y') }}
+                                    {{ Carbon\Carbon::parse($my_submission->created_at)->format('d M Y h:i A') }}
                                 @endif
                             </td>
                         </tr>

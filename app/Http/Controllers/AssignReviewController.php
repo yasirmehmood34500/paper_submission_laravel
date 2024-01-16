@@ -21,8 +21,11 @@ class AssignReviewController extends Controller
 		$paper = $this->paper_submission_interface->get_by_id($paper_id);
 		$this->assign_review_interface->add($user_id, $paper);
 		$user = $this->user_interface->single($user_id);
-		if ($user) {
-			Mail::to($user->email)->send(new AssignToReviewEmail($paper->paper_no, $paper->title, $user->name));
+		if ($user && config('app.env') == 'production') {
+			try {
+				Mail::to($user->email)->send(new AssignToReviewEmail($paper->paper_no, $paper->title, $user->name));
+			} catch (\Throwable $th) {
+			}
 		}
 		return back();
 	}

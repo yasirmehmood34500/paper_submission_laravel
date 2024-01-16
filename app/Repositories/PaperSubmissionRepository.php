@@ -33,6 +33,7 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 			['id' => $id],
 			[
 				'send_date' => date('Y-m-d'),
+				'created_at' => date('Y-m-d H:i:s'),
 				'in_draft' => 0,
 			]
 		);
@@ -64,7 +65,7 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 	}
 	public function all_submissions(): PaperSubmission | Collection
 	{
-		return $this->paper_submission_model->with('user')->where('in_draft', 0)->orderBy('send_date', 'DESC')->get();
+		return $this->paper_submission_model->with('user')->where('in_draft', 0)->orderBy('created_at', 'DESC')->get();
 	}
 	public function paper_status_wise($status): PaperSubmission | Collection
 	{

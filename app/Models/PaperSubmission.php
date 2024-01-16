@@ -24,6 +24,7 @@ class PaperSubmission extends Model
         'send_date',
         'active',
         'revision',
+        'created_at',
     ];
 
     public const PAPER_STATUS = ['Pending', 'Under Review', 'Reviewed', 'Pending on Author', 'Pending on Editor'];
