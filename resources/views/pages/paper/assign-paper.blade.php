@@ -12,18 +12,20 @@
                     <th>Assign Date</th>
                 </tr>
                 @foreach ($assign_papers as $assign_paper)
-                    <tr>
-                        <td>
-                            <a
-                                href="{{ route('view_paper_detail', ['id' => @$assign_paper?->paper_submission?->id ?: 0]) }}"><b>{{ @$assign_paper?->paper_submission?->paper_no }}</b></a>
-                        </td>
-                        <td>{{ @$assign_paper?->paper_submission?->title }}</td>
-                        <td>R{{ @$assign_paper?->revision }}</td>
-                        <td>{{ @$assign_paper?->review_type?->name ?? 'Pending' }}</td>
-                        <td>
-                            {{ Carbon\Carbon::parse($assign_paper->assign_date)->format('d M Y') }}
-                        </td>
-                    </tr>
+                    @if (@$assign_paper?->paper_submission?->paper_no)
+                        <tr>
+                            <td>
+                                <a
+                                    href="{{ route('view_paper_detail', ['id' => @$assign_paper?->paper_submission?->id ?: 0]) }}"><b>{{ @$assign_paper?->paper_submission?->paper_no }}</b></a>
+                            </td>
+                            <td>{{ @$assign_paper?->paper_submission?->title }}</td>
+                            <td>R{{ @$assign_paper?->revision }}</td>
+                            <td>{{ @$assign_paper?->review_type?->name ?? 'Pending' }}</td>
+                            <td>
+                                {{ Carbon\Carbon::parse($assign_paper->assign_date)->format('d M Y') }}
+                            </td>
+                        </tr>
+                    @endif
                 @endforeach
             </table>
         </div>
