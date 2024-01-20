@@ -15,7 +15,7 @@
                     <tr>
                         <td>
                             <a
-                                href="{{ route('view_paper_detail', ['id' => @$assign_paper?->paper_submission?->id ?: 0]) }}"><b>{{ $assign_paper->paper_submission->paper_no }}</b></a>
+                                href="{{ route('view_paper_detail', ['id' => @$assign_paper?->paper_submission?->id ?: 0]) }}"><b>{{ @$assign_paper?->paper_submission?->paper_no }}</b></a>
                         </td>
                         <td>{{ @$assign_paper?->paper_submission?->title }}</td>
                         <td>R{{ @$assign_paper?->revision }}</td>
