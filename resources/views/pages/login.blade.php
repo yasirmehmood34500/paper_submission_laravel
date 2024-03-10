@@ -9,7 +9,7 @@
     <div class="auth">
         <div class="row"
             style="background: {{ config('constants.journal_login_bg_color') }}; color: {{ config('constants.journal_login_text_color') }};">
-            <div class="col-md-2">
+            <div class="col-md-2" style="padding: 10px 30px;">
                 <img style="width: 100px; height: 100px;" src="{{ asset('storage') }}/{{ config('constants.journal_login_logo') }}" alt="">
             </div>
             <div class="col-md-10" style="display: flex; align-items: center;">
