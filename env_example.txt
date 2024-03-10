@@ -6,8 +6,12 @@ APP_URL=http://localhost
 
 JOURNAL_NAME="Apple Banana Cat"
 JOURNAL_STAND_FOR="ABC"
-JOURNAL_URL="https://pdc.societyfia.org"
+JOURNAL_SUBMISSION_URL="https://abc.societyfia.org"
+JOURNAL_URL="https://societyfia.org/journal/ABC"
 JOURNAL_EMAIL="contact@societyfia.org"
+JOURNAL_LOGIN_BG_COLOR="gray"
+JOURNAL_LOGIN_TEXT_COLOR="white"
+JOURNAL_LOGIN_LOGO="journal-logo.png"
 
 LOG_CHANNEL=stack
 LOG_DEPRECATIONS_CHANNEL=null

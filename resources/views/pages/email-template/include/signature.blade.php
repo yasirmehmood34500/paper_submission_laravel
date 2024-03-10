@@ -1,5 +1,5 @@
 <ol>
-    <li><a href="{{ config('constants.journal_url') }}">Login Link</a></li>
+    <li><a href="{{ config('constants.journal_submission_url') }}">Login Link</a></li>
 </ol>
 <p>In the meantime, if you have any questions, please do not hesitate to contact us at
     {{ config('constants.journal_email') }}.</p>
