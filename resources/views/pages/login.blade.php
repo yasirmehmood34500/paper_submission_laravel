@@ -12,7 +12,7 @@
             <div class="col-md-2">
                 <img style="width: 100px; height: 100px;" src="{{ asset('storage') }}/{{ config('constants.journal_login_logo') }}" alt="">
             </div>
-            <div class="col-md-10">
+            <div class="col-md-10" style="display: flex; align-items: center;">
                 <h1>{{ config('constants.journal_name') }}</h1>
             </div>
         </div>
