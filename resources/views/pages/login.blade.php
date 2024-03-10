@@ -7,10 +7,20 @@
 
 <body>
     <div class="auth">
+        <div class="row"
+            style="background: {{ config('constants.journal_login_bg_color') }}; color: {{ config('constants.journal_login_text_color') }};">
+            <div class="col-md-2">
+                <img style="width: 100px; height: 100px;" src="{{ asset('storage') }}/{{ config('constants.journal_login_logo') }}" alt="">
+            </div>
+            <div class="col-md-10">
+                <h1>{{ config('constants.journal_name') }}</h1>
+            </div>
+        </div>
         <div class="auth-container">
             <div class="card">
                 <header class="auth-header">
-                    <h1 class="auth-title">{{ config('constants.journal_stand_for') }} Login</h1>
+                    <h1 class="auth-title">{{ config('constants.journal_stand_for') }}</h1>
+                    <h2 class="auth-title">Login</h2>
                 </header>
                 <div class="auth-content">
                     @if (session('error'))

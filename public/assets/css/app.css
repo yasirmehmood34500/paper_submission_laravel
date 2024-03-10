@@ -90,7 +90,8 @@ body {
   overflow-y: auto; }
 
 .auth-container {
-  width: 450px;
+  /* width: 450px; */
+  min-width: 450px;
   min-height: 330px;
   position: absolute;
   top: 50%;
