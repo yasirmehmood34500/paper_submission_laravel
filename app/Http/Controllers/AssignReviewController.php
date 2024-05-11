@@ -25,6 +25,7 @@ class AssignReviewController extends Controller
 			try {
 				Mail::to($user->email)->send(new AssignToReviewEmail($paper->paper_no, $paper->title, $user->name));
 			} catch (\Throwable $th) {
+				info($th->getMessage());
 			}
 		}
 		return back();

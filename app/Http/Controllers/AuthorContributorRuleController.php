@@ -15,7 +15,7 @@ class AuthorContributorRuleController extends Controller
 	{
 		$this->AllowPermission(['view_contributor_rule', 'add_contributor_rule']);
 		return view('pages.contributor-rule.view')->with([
-			'meta_title' => 'Contribitor Role',
+			'meta_title' => 'Contributor Role',
 			'contributor_rules' =>  $this->author_contributor_rule_interface->all()
 		]);
 	}

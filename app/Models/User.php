@@ -49,7 +49,7 @@ class User extends Authenticatable
     public const AUTHOR = 2;
     public const REVIEWER = 3;
 
-    public const USER_TYPE=['','Admin','Author','Reviewer'];
+    public const USER_TYPE = ['None', 'Admin', 'Author', 'Reviewer'];
 
     public function roles()
     {

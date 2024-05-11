@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AuthorContributorRule extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable=[
+    protected $fillable = [
         'name',
         'active',
     ];

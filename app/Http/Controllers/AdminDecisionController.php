@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\AdminDecisionInterface;
-use Illuminate\Http\Request;
 
 class AdminDecisionController extends Controller
 {

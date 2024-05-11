@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AuthorContributor extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable=[
+    protected $fillable = [
         'author_contributor_rule_id',
         'paper_submission_id',
         'name',

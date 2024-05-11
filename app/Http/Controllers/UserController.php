@@ -80,7 +80,7 @@ class UserController extends Controller
 	}
 	public function update_password_req(Request $request)
 	{
-		$rres = $this->user_interface->update_password($request);
-		return back()->with('error', $rres ? 'Password Updated' : 'Both Password Should be same');
+		$res = $this->user_interface->update_password($request);
+		return back()->with('error', $res ? 'Password Updated' : 'Both Password Should be same');
 	}
 }

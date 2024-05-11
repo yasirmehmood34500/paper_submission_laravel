@@ -29,7 +29,7 @@ class PaperSubmissionController extends Controller
 		protected AssignReviewInterface $assign_review_interface,
 		protected ReviewTypeInterface $review_type_interface,
 		protected AdminDecisionInterface $admin_decision_interface,
-		protected UserInterface $user_nterface
+		protected UserInterface $user_interface
 	) {
 		//
 	}
@@ -131,9 +131,7 @@ class PaperSubmissionController extends Controller
 		}
 	}
 
-
-
-	public function submission_1_req(Request $request)
+	public function submission_1_req()
 	{
 		$this->authorize('new_paper_submission');
 		session(['paper_submission_id' => 0]);
@@ -146,7 +144,7 @@ class PaperSubmissionController extends Controller
 		session(['paper_submission_id' => $paper->id]);
 		return redirect()->route('submission_step_3');
 	}
-	public function submission_3_req(Request $request)
+	public function submission_3_req()
 	{
 		$this->authorize('new_paper_submission');
 		return redirect()->route('submission_step_4');
@@ -160,6 +158,7 @@ class PaperSubmissionController extends Controller
 			try {
 				Mail::to(auth()->user()->email)->send(new PaperSubmissionEmail($paper->paper_no, $paper->title, auth()->user()->name));
 			} catch (\Throwable $th) {
+				info($th->getMessage());
 			}
 		}
 		return redirect()->route('my_submission');
@@ -169,7 +168,7 @@ class PaperSubmissionController extends Controller
 	{
 		$this->authorize('view_all_submission');
 		return view('pages.paper.view')->with([
-			'meta_title' => 'All Submissioin',
+			'meta_title' => 'All Submission',
 			'my_submissions' => $this->paper_submission_interface->all_submissions(),
 		]);
 	}
@@ -202,12 +201,13 @@ class PaperSubmissionController extends Controller
 		$this->AllowPermission(['view_all_submission', 'reply_to_author']);
 		$paper = $this->paper_submission_interface->get_by_id($request->paper_id);
 		if ($paper) {
-			$author = $this->user_nterface->single($paper->user_id);
+			$author = $this->user_interface->single($paper->user_id);
 			$this->admin_decision_interface->revision_send_to_author($request);
 			if (config('app.env') == 'production') {
 				try {
 					Mail::to($author->email)->send(new AdminDecisionEmail($request->subject, $request->comment, $author->name));
 				} catch (\Throwable $th) {
+					info($th->getMessage());
 				}
 			}
 		}

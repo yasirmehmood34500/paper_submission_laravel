@@ -103,9 +103,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('submission-requirement')->controller(SubmissionRequirementController::class)->group(function () {
-        Route::get('view', 'view')->name('view_submissioin_requirement_page');
-        Route::get('delete/{id}', 'delete')->name('delete_submissioin_requirement');
-        Route::post('view', 'create')->name('create_submissioin_requirement');
+        Route::get('view', 'view')->name('view_submission_requirement_page');
+        Route::get('delete/{id}', 'delete')->name('delete_submission_requirement');
+        Route::post('view', 'create')->name('create_submission_requirement');
     });
 
     Route::prefix('assign-to-reviewer')->controller(AssignReviewController::class)->group(function () {
@@ -118,10 +118,10 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
-    Route::prefix('email-deisng-view')->group(function () {
+    Route::prefix('email-design-view')->group(function () {
         Route::get('{blade_name}', function ($blade_name) {
             return view("pages.email-template." . $blade_name)->with([
-                'name' => "Yasir",
+                'name' => "SIR",
                 "comment" => "Comment",
                 "title" => "Paper Title",
                 "paper_no" => "Paper No",

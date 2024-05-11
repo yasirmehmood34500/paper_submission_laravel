@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ReviewType extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable=[
+    protected $fillable = [
         'name',
     ];
 }

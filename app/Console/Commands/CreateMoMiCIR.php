@@ -14,7 +14,6 @@ class CreateMoMiCIR extends Command
      * @var string
      */
     protected $signature = 'create:files {filename} {v1}';
-    // protected $signature = 'create:codefile';
 
     /**
      * The console command description.
@@ -40,9 +39,6 @@ class CreateMoMiCIR extends Command
         }
 
         if (in_array('c', $allow_commands)) {
-            // Artisan::call('make:controller', [
-            //     'name' => $filename . 'Controller',
-            // ]);
             Artisan::call('create:controller ' . $filename);
         }
         if (in_array('i', $allow_commands)) {

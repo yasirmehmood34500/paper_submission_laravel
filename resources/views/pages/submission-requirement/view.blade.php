@@ -5,7 +5,7 @@
         <div class="row sameheight-container">
             @can('add_paper_submission_requirement')
                 <div class="col-md-4">
-                    <form action="{{ route('create_submissioin_requirement') }}" method="post">
+                    <form action="{{ route('create_submission_requirement') }}" method="post">
                         @csrf
                         <label for="">Text</label>
                         <input type="text" name="text" required="" class="form-control">
@@ -26,7 +26,7 @@
                                 <td>{{ $submission_requirement->text }}</td>
                                 <td>
                                     @can('delete_paper_submission_requirement')
-                                        <a href="{{ route('delete_submissioin_requirement', ['id' => $submission_requirement->id]) }}"
+                                        <a href="{{ route('delete_submission_requirement', ['id' => $submission_requirement->id]) }}"
                                             class="btn btn-danger">Delete</a>
                                     @endcan
                                 </td>

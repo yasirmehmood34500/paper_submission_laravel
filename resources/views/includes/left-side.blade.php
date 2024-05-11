@@ -114,7 +114,7 @@
                 @endif
                 @if (Gate::any(['add_paper_submission_requirement', 'view_paper_submission_requirement']))
                     <li>
-                        <a href="{{ route('view_submissioin_requirement_page') }}">
+                        <a href="{{ route('view_submission_requirement_page') }}">
                             <i class="fa fa-pencil-square-o"></i> Submission Requirement
                         </a>
                     </li>
