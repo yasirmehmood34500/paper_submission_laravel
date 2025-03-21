@@ -7,5 +7,5 @@
     Regards,<br>
     M. Azhar<br>
     <b>Editorial Assistant</b><br>
-    <span style="color: #089a08; font-weight: 600;">Journal of Global Innovations in Agricultural Sciences (JGIAS)</span>
+    <span style="color: #089a08; font-weight: 600;">{{ config('constants.journal_name') }} ({{ config('constants.journal_stand_for') }})</span>
 </p>
