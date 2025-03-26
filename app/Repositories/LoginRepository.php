@@ -3,9 +3,11 @@
 namespace App\Repositories;
 
 use App\Interfaces\LoginInterface;
+use App\Mail\ForgetPasswordEmail;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class LoginRepository implements LoginInterface
 {
@@ -49,5 +51,42 @@ class LoginRepository implements LoginInterface
 		$roles = Role::where('user_level', $role_id)->get()->pluck("id");
 		$user->roles()->sync($roles);
 		return true;
+	}
+	public function forget_password_req($request)
+	{
+		$user = $this->user_model->where('email', $request['email'])->first();
+		if (!$user) {
+			return [false, 'Email not found'];
+		}
+		$token = md5($user->email . time());
+		$user->reset_password_token = $token;
+		$user->save();
+		if (config('app.env') == 'production') {
+			try {
+				Mail::to($user->email)->send(new ForgetPasswordEmail($token, $user->name));
+			} catch (\Throwable $th) {
+				info($th->getMessage());
+			}
+		}
+		return [true, 'Check Email'];
+	}
+	public function reset_password_page($token)
+	{
+		$available = $this->user_model->where('reset_password_token', $token)->first();
+		if (!$available) {
+			return false;
+		}
+		return true;
+	}
+	public function reset_password_req($request, $token)
+	{
+		$user = $this->user_model->where('reset_password_token', $token)->first();
+		if (!$user) {
+			return [false, "Password Reset Failed"];
+		}
+		$user->password = $request['password'];
+		$user->reset_password_token = null;
+		$user->save();
+		return [true, "Password Reset Success"];
 	}
 }

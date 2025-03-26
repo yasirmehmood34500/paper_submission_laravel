@@ -11,7 +11,8 @@
             style="background: {{ config('constants.journal_login_bg_color') }}; color: {{ config('constants.journal_login_text_color') }};">
             <div class="col-md-2" style="padding: 10px 30px;">
                 <a href="{{ config('constants.journal_url') }}"><img style="width: 100px; height: 100px;"
-                        src="{{ asset('storage') }}/{{ config('constants.journal_login_logo') }}?v1.0.1" alt=""></a>
+                        src="{{ asset('storage') }}/{{ config('constants.journal_login_logo') }}?v1.0.1"
+                        alt=""></a>
             </div>
             <div class="col-md-10" style="display: flex; align-items: center;">
                 <h1>{{ config('constants.journal_name') }}</h1>
@@ -20,7 +21,7 @@
         <div class="auth-container">
             <div class="card">
                 <header class="auth-header">
-                    <h1 class="auth-title">{{ config('constants.journal_stand_for') }} Login</h1>
+                    <h1 class="auth-title">{{ config('constants.journal_stand_for') }} Forget Password</h1>
                 </header>
                 <div class="auth-content">
                     @if (session('error'))
@@ -29,7 +30,7 @@
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
-                    <form id="login-form" action="{{ route('login_req') }}" method="POST" novalidate="">
+                    <form id="login-form" action="{{ route('forget_password_req') }}" method="POST" novalidate="">
                         @csrf
                         <div class="form-group">
                             <label for="username">Email</label>
@@ -40,24 +41,11 @@
                             <p class="alert alert-danger">{{ $message }}</p>
                         @enderror
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control underlined" name="password"
-                                placeholder="Your password" value="{{ old('password') }}" required>
-                        </div>
-                        @error('password')
-                            <p class="alert alert-danger">{{ $message }}</p>
-                        @enderror
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-block btn-primary">Login</button>
+                            <button type="submit" class="btn btn-block btn-primary send_email">Send Email</button>
                         </div>
                         <div class="form-group">
                             <p class="text-muted text-center">Do not have an account?
                                 <a href="{{ route('register') }}">Sign Up!</a>
-                            </p>
-                        </div>
-                        <div class="form-group">
-                            <p class="text-muted text-center">
-                                <a href="{{ route('forget_password_page') }}">Forget Password</a>
                             </p>
                         </div>
                     </form>
@@ -72,6 +60,13 @@
     </div>
     @include('includes.primary-color')
     @include('includes.js')
+    <script>
+        $(document).ready(function() {
+            $(".send_email").click(function() {
+                $(this).hide();
+            });
+        });
+    </script>
 </body>
 
 </html>

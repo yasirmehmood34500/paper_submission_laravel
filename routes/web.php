@@ -136,6 +136,9 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('login', 'login_req')->name('login_req');
     Route::get('register', 'register_page')->name('register');
     Route::post('register', 'register_req')->name('register_req');
-
+    Route::get('forget-password','forget_password_page')->name('forget_password_page');
+    Route::post('forget-password','forget_password_req')->name('forget_password_req');
+    Route::get('reset-password/{token}','reset_password_page')->name('reset_password_page');
+    Route::post('reset-password/{token}','reset_password_req')->name('reset_password_req');
     Route::get('logout', 'logout')->name('logout');
 });

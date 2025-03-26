@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-	public function __construct(protected LoginInterface $loginInterface)
-	{
-	}
+	public function __construct(protected LoginInterface $loginInterface) {}
 	public function login_page()
 	{
 		if (auth()->check()) {
@@ -68,6 +66,50 @@ class LoginController extends Controller
 			return redirect()->route('login');
 		} else {
 			return back();
+		}
+	}
+	public function forget_password_page()
+	{
+		if (auth()->check()) {
+			return redirect()->route('home');
+		}
+		return view('pages.forget-password')->with([
+			'meta_title' => 'Forget Password',
+		]);
+	}
+	public function forget_password_req(Request $request)
+	{
+		$rules = [
+			'email' => 'required|email',
+		];
+		$request->validate($rules);
+		$resp = $this->loginInterface->forget_password_req($request);
+		if ($resp[0]) {
+			return back()->with('success', $resp[1]);
+		} else {
+			return back()->with('error', $resp[1]);
+		}
+	}
+	public function reset_password_page($token)
+	{
+		$resp = $this->loginInterface->reset_password_page($token);
+		if ($resp) {
+			return view('pages.reset-password');
+		} else {
+			abort(404);
+		}
+	}
+	public function reset_password_req(Request $request, $token)
+	{
+		$rules = [
+			'password' => 'required|min:8|confirmed',
+		];
+		$request->validate($rules);
+		$resp = $this->loginInterface->reset_password_req($request, $token);
+		if ($resp[0]) {
+			return to_route('login')->with('success', $resp[1]);
+		} else {
+			return back()->with('error', $resp[1]);
 		}
 	}
 }
