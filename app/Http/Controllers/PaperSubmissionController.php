@@ -13,6 +13,7 @@ use App\Interfaces\SubmissionFileTypeInterface;
 use App\Interfaces\SubmissionRequirementInterface;
 use App\Interfaces\UserInterface;
 use App\Mail\AdminDecisionEmail;
+use App\Mail\PaperSubmissionCoAuthorEmail;
 use App\Mail\PaperSubmissionEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -155,8 +156,12 @@ class PaperSubmissionController extends Controller
 		$paper = $this->paper_submission_interface->submit_update_paper_with_id($request, session('paper_submission_id'));
 		session()->forget('paper_submission_id');
 		if (config('app.env') == 'production') {
+			$paper_co_authors = $this->author_contributor_interface->get_by_paper_id($paper->id);
 			try {
 				Mail::to(auth()->user()->email)->send(new PaperSubmissionEmail($paper->paper_no, $paper->title, auth()->user()->name));
+				foreach ($paper_co_authors as $key => $value) {
+					Mail::to(auth()->user()->email)->send(new PaperSubmissionCoAuthorEmail($paper->paper_no, $paper->title, auth()->user()->name, @$value?->contributor_rule?->name ?? ''));
+				}
 			} catch (\Throwable $th) {
 				info($th->getMessage());
 			}
