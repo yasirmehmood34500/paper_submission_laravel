@@ -12,4 +12,5 @@ interface PaperSubmissionInterface
 	public function all_submissions();
 	public function paper_status_wise($status);
 	public function revision_reply_send($request);
+	public function delete_paper($id);
 }

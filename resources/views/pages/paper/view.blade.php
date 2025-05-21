@@ -26,7 +26,12 @@
                         @endcan
                         <th>Title</th>
                         <th>Status</th>
-                        <th>Submited Date</th>
+                        <th>Submitted Date</th>
+                        @can('delete_submission_paper')
+                            @if (request()->route('status') == 1)
+                                <th>Delete</th>
+                            @endif
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +65,14 @@
                                     {{ Carbon\Carbon::parse($my_submission->created_at)->format('d M Y h:i A') }}
                                 @endif
                             </td>
+                            @can('delete_submission_paper')
+                                @if (request()->route('status') == 1)
+                                    <td>
+                                        <a href="{{ route('delete_paper', ['id' => @$my_submission?->id ?? 0]) }}"
+                                            class="btn btn-danger">Delete</a>
+                                    </td>
+                                @endif
+                            @endcan
                         </tr>
                     @endforeach
                 </tbody>

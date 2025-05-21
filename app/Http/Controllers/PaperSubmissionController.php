@@ -223,4 +223,9 @@ class PaperSubmissionController extends Controller
 		$this->paper_submission_interface->revision_reply_send($request);
 		return back();
 	}
+	public function delete_paper($id)
+	{
+		$this->paper_submission_interface->delete_paper($id);
+		return back();
+	}
 }

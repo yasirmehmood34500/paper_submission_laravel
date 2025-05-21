@@ -140,7 +140,11 @@ class RoleSeeder extends Seeder
                 'key' => 'login_as_user',
                 'user_level' => User::ADMIN,
             ],
-
+            [
+                'name' => 'Delete Submission Paper',
+                'key' => 'delete_submission_paper',
+                'user_level' => User::ADMIN,
+            ],
 
 
         ];

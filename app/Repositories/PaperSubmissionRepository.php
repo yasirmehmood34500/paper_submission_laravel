@@ -76,4 +76,9 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 		$this->paper_submission_model->where('user_id', auth()->id())->where('id', $request['paper_id'])->update(['status' => $this->paper_submission_model::PENDING_FROM_EDITOR_STATUS]);
 		return true;
 	}
+	public function delete_paper($id): bool
+	{
+		$this->paper_submission_model->where('id', $id)->delete();
+		return true;
+	}
 }
