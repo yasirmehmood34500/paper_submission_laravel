@@ -54,7 +54,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('delete/{id}', 'delete_paper')->name('delete_paper');
     });
 
-
     Route::prefix('contributor')->controller(AuthorContributorController::class)->group(function () {
         Route::post('add', 'add_contributor')->name('add_contributor');
         Route::get('delete/{id}', 'delete_contributor')->name('delete_contributor');
