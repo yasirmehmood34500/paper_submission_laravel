@@ -12,6 +12,10 @@
             margin-top: 10px;
             box-shadow: 4px 5px 7px gray;
         }
+        
+        .downloaded-link {
+            color: orange !important;
+        }
     </style>
 @endsection
 @section('content')
@@ -103,7 +107,7 @@
                                 <td>{{ $paper_file->file_type->name }}</td>
                                 <td>R{{ $paper_file->revision }}</td>
                                 <td><a href="{{ asset('storage/uploads/submission') }}/{{ $paper_file->file_name }}"
-                                        download="">Download</a></td>
+                                        class="download-link @if(auth()->check() && auth()->user()->user_level == 1 && $paper->downloaded == 1) downloaded-link @endif" data-paper-id="{{ $paper->id }}" download="">Download</a></td>
                             </tr>
                         @endif
                     @endforeach
@@ -128,7 +132,7 @@
                                     @if ($admin_decision->file != '')
                                         @foreach (explode(',', $admin_decision->file) as $single_file)
                                             <a href="{{ asset('storage/uploads/admin_reply') }}/{{ $single_file }}"
-                                                download="">Download</a><br>
+                                                class="download-link @if(auth()->check() && auth()->user()->user_level == 1 && $paper->downloaded == 1) downloaded-link @endif" data-paper-id="{{ $paper->id }}" download="">Download</a><br>
                                         @endforeach
                                     @else
                                         No Files
@@ -168,7 +172,7 @@
                                     @if ($assign_reviewer->review_type_id)
                                         @if ($assign_reviewer->file != '')
                                             <a href="{{ asset('storage/uploads/reviewer_reply') }}/{{ $assign_reviewer->file }}"
-                                                download="">Download</a>
+                                                class="download-link @if(auth()->check() && auth()->user()->user_level == 1 && $paper->downloaded == 1) downloaded-link @endif" data-paper-id="{{ $paper->id }}" download="">Download</a>
                                         @else
                                             No File
                                         @endif
@@ -347,6 +351,27 @@
                     }
                 });
             });
+
+            @if(auth()->check() && auth()->user()->user_level == 1)
+            $(".download-link").click(function() {
+                var paper_id = $(this).data('paper-id');
+                var link = $(this);
+                
+                $.ajax({
+                    url: "{{ route('track_download') }}",
+                    method: 'POST',
+                    data: {
+                        paper_id: paper_id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $(".download-link").addClass('downloaded-link');
+                        }
+                    }
+                });
+            });
+            @endif
         });
     </script>
 @endsection

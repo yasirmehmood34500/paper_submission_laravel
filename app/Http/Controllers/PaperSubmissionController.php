@@ -132,6 +132,23 @@ class PaperSubmissionController extends Controller
 		}
 	}
 
+	public function track_download(Request $request)
+	{
+		$request->validate([
+			'paper_id' => 'required|exists:paper_submissions,id',
+		]);
+
+		if (auth()->check() && auth()->user()->user_level == 1) {
+			$paper = $this->paper_submission_interface->get_by_id($request->paper_id);
+			if ($paper) {
+				$paper->update(['downloaded' => 1]);
+				return response()->json(['success' => true]);
+			}
+		}
+		
+		return response()->json(['success' => false], 403);
+	}
+
 	public function submission_1_req()
 	{
 		$this->authorize('new_paper_submission');

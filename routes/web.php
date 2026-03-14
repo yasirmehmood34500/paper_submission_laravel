@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('step4', 'submission_4_req')->name('submission_step_4_req');
 
         Route::get('view-paper/{id}', 'view_paper_detail')->name('view_paper_detail');
+        Route::post('track-download', 'track_download')->name('track_download');
         Route::get('view/{in_draft?}', 'my_submission')->name('my_submission');
         Route::get('continue-draft/{id}', 'continue_draft')->name('continue_draft');
 

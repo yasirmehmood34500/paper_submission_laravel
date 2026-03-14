@@ -24,6 +24,7 @@ class PaperSubmission extends Model
         'send_date',
         'active',
         'revision',
+        'downloaded',
         'created_at',
     ];
 
