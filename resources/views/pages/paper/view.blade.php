@@ -56,6 +56,9 @@
                                     Draft
                                 @else
                                     {{ App\Models\PaperSubmission::PAPER_STATUS[$my_submission->status] }}
+                                    @if(auth()->check() && auth()->user()->user_level == 1 && $my_submission->downloaded == 1)
+                                        <span class="badge badge-success">Downloaded</span>
+                                    @endif
                                 @endif
                             </td>
                             <td>
@@ -83,7 +86,7 @@
 @section('js')
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#paper_table').dataTable({
                 // iDisplayLength: 100
                 lengthMenu: [

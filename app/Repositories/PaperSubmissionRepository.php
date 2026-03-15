@@ -38,7 +38,7 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 			]
 		);
 	}
-	public function my_submission($in_draft): PaperSubmission | Collection
+	public function my_submission($in_draft): PaperSubmission|Collection
 	{
 		return $this->paper_submission_model->where('in_draft', $in_draft)->where('user_id', auth()->id())->orderBy('id', 'DESC')->get();
 	}
@@ -63,17 +63,17 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 		}
 		return $paper;
 	}
-	public function all_submissions(): PaperSubmission | Collection
+	public function all_submissions(): PaperSubmission|Collection
 	{
 		return $this->paper_submission_model->with('user')->where('in_draft', 0)->orderBy('created_at', 'DESC')->get();
 	}
-	public function paper_status_wise($status): PaperSubmission | Collection
+	public function paper_status_wise($status): PaperSubmission|Collection
 	{
 		return $this->paper_submission_model->with('user')->where('in_draft', 0)->where('status', $status)->orderBy('send_date', 'DESC')->get();
 	}
 	public function revision_reply_send($request): bool
 	{
-		$this->paper_submission_model->where('user_id', auth()->id())->where('id', $request['paper_id'])->update(['status' => $this->paper_submission_model::PENDING_FROM_EDITOR_STATUS]);
+		$this->paper_submission_model->where('user_id', auth()->id())->where('id', $request['paper_id'])->update(['status' => $this->paper_submission_model::PENDING_FROM_EDITOR_STATUS, 'downloaded' => 0]);
 		return true;
 	}
 	public function delete_paper($id): bool
