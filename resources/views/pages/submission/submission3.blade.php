@@ -35,7 +35,7 @@
                 <label for="">Affiliation</label>
                 <input type="text" name="affiliation" class="form-control">
                 <label for="">Bio Statement</label>
-                <textarea name="bio_statement" id="" cols="3" rows="3" class="form-control"></textarea>
+                <textarea name="bio_statement" id="" cols="3" rows="3" maxlength="450" class="form-control"></textarea>
                 <label for="">Contributor's Rule</label>
                 <select name="author_contributor_rule_id" class="form-control" id="">
                     @foreach ($contributor_rules as $contributor_rule)
