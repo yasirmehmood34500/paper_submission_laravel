@@ -25,7 +25,10 @@
                             <th>Email</th>
                         @endcan
                         <th>Title</th>
-                        <th>Status</th>
+                        <th>Process Status</th>
+                        @can('view_all_submission')
+                            <th>Status</th>
+                        @endcan
                         <th>Submitted Date</th>
                         @can('delete_submission_paper')
                             @if (request()->route('status') == 1)
@@ -53,14 +56,30 @@
                             <td>{{ $my_submission->title }}</td>
                             <td>
                                 @if ($my_submission->in_draft)
-                                    Draft
+                                    <span class="badge badge-secondary" style="font-size: 13px; padding: 5px 8px;">Draft</span>
                                 @else
-                                    {{ App\Models\PaperSubmission::PAPER_STATUS[$my_submission->status] }}
-                                    @if(auth()->check() && auth()->user()->user_level == 1 && $my_submission->downloaded == 1)
-                                        <span class="badge badge-success">Downloaded</span>
-                                    @endif
+                                    @php
+                                        $pStatus = $my_submission->process_status ?? 1;
+                                        $badgeClass = App\Models\PaperSubmission::PROCESS_STATUS_BADGES[$pStatus] ?? 'badge-primary';
+                                        $pName = App\Models\PaperSubmission::PROCESS_STATUS[$pStatus] ?? 'Submitted';
+                                    @endphp
+                                    <span class="badge {{ $badgeClass }}" style="font-size: 13px; padding: 5px 10px; font-weight: 600;">
+                                        {{ $pName }}
+                                    </span>
                                 @endif
                             </td>
+                            @can('view_all_submission')
+                                <td>
+                                    @if ($my_submission->in_draft)
+                                        Draft
+                                    @else
+                                        {{ App\Models\PaperSubmission::PAPER_STATUS[$my_submission->status] }}
+                                        @if(auth()->check() && auth()->user()->user_level == 1 && $my_submission->downloaded == 1)
+                                            <span class="badge badge-success">Downloaded</span>
+                                        @endif
+                                    @endif
+                                </td>
+                            @endcan
                             <td>
                                 @if ($my_submission->in_draft)
                                     Not Submitted

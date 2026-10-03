@@ -13,4 +13,5 @@ interface PaperSubmissionInterface
 	public function paper_status_wise($status);
 	public function revision_reply_send($request);
 	public function delete_paper($id);
+	public function update_process_status($paper_id, $process_status);
 }

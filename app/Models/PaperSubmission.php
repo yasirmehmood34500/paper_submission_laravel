@@ -25,6 +25,7 @@ class PaperSubmission extends Model
         'active',
         'revision',
         'downloaded',
+        'process_status',
         'created_at',
     ];
 
@@ -34,6 +35,40 @@ class PaperSubmission extends Model
     public const REVIEWED_STATUS = 2;
     public const PENDING_FROM_AUTHOR_STATUS = 3;
     public const PENDING_FROM_EDITOR_STATUS = 4;
+
+    public const PROCESS_STATUS = [
+        1 => 'Submitted',
+        2 => 'Initial Check',
+        3 => 'Under Review',
+        4 => 'Reviews Completed',
+        5 => 'Editorial Assessment',
+        6 => 'Revision Required',
+        7 => 'Revision Submitted',
+        8 => 'APC Payment Required',
+        9 => 'Revision Processing',
+        10 => 'Accepted',
+        11 => 'Copyediting / Proofreading',
+        12 => 'In Press',
+        13 => 'Scheduled for Issue',
+        14 => 'Published',
+    ];
+
+    public const PROCESS_STATUS_BADGES = [
+        1 => 'badge-info',
+        2 => 'badge-primary',
+        3 => 'badge-warning',
+        4 => 'badge-info',
+        5 => 'badge-secondary',
+        6 => 'badge-danger',
+        7 => 'badge-primary',
+        8 => 'badge-warning',
+        9 => 'badge-info',
+        10 => 'badge-success',
+        11 => 'badge-secondary',
+        12 => 'badge-dark',
+        13 => 'badge-primary',
+        14 => 'badge-success',
+    ];
 
     /**
      * Get the user that owns the PaperSubmission

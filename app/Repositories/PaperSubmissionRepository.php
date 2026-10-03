@@ -35,6 +35,7 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 				'send_date' => date('Y-m-d'),
 				'created_at' => date('Y-m-d H:i:s'),
 				'in_draft' => 0,
+				'process_status' => 1,
 			]
 		);
 	}
@@ -80,5 +81,11 @@ class PaperSubmissionRepository implements PaperSubmissionInterface
 	{
 		$this->paper_submission_model->where('id', $id)->delete();
 		return true;
+	}
+	public function update_process_status($paper_id, $process_status): bool
+	{
+		return (bool) $this->paper_submission_model->where('id', $paper_id)->update([
+			'process_status' => $process_status
+		]);
 	}
 }

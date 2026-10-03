@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('reply-review', 'reviewer_reply_paper')->name('reviewer_reply_paper');
         Route::post('revision-send-to-author', 'revision_send_to_author')->name('revision_send_to_author');
         Route::post('revision-reply-send', 'revision_reply_send')->name('revision_reply_send');
+        Route::post('update-process-status', 'update_process_status')->name('update_paper_process_status');
         Route::get('delete/{id}', 'delete_paper')->name('delete_paper');
     });
 

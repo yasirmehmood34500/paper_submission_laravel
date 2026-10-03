@@ -43,6 +43,59 @@
             </div>
         </div>
 
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 15px;">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 15px;">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @php
+            $currentProcessStatus = $paper->process_status ?? 1;
+            $processStatusName = App\Models\PaperSubmission::PROCESS_STATUS[$currentProcessStatus] ?? 'Submitted';
+            $processBadgeClass = App\Models\PaperSubmission::PROCESS_STATUS_BADGES[$currentProcessStatus] ?? 'badge-primary';
+        @endphp
+
+        <div class="block col-md-12" style="background-color: #f8f9fa; border-left: 5px solid #007bff; margin-top: 15px; margin-bottom: 15px;">
+            <div class="row align-items-center" style="display: flex; align-items: center; flex-wrap: wrap;">
+                <div class="col-md-6 col-sm-12">
+                    <h5 style="margin-bottom: 5px; font-weight: 600; color: #333;">
+                        <i class="fa fa-tasks" style="color: #007bff; margin-right: 5px;"></i> Paper Process Status
+                    </h5>
+                    <div style="font-size: 15px; margin-top: 6px;">
+                        <span style="color: #666; font-weight: 500;">Current Status:</span>
+                        <span id="current_process_status_badge" class="badge {{ $processBadgeClass }}" style="font-size: 14px; padding: 6px 12px; font-weight: 600; border-radius: 4px; vertical-align: middle;">
+                            {{ $processStatusName }}
+                        </span>
+                    </div>
+                </div>
+                @if (auth()->check() && auth()->user()->user_level == App\Models\User::ADMIN)
+                    <div class="col-md-6 col-sm-12 text-md-right mt-2 mt-md-0">
+                        <form action="{{ route('update_paper_process_status') }}" method="POST" id="update_process_status_form" style="display: inline-flex; align-items: center; gap: 8px; justify-content: flex-end; flex-wrap: wrap;">
+                            @csrf
+                            <input type="hidden" name="paper_id" value="{{ $paper->id }}">
+                            <label for="process_status_select" style="margin-bottom: 0; font-weight: 600; color: #444;">Change Status:</label>
+                            <select name="process_status" id="process_status_select" class="form-control" style="width: auto; min-width: 240px; display: inline-block;">
+                                @foreach (App\Models\PaperSubmission::PROCESS_STATUS as $statusCode => $statusLabel)
+                                    <option value="{{ $statusCode }}" {{ $currentProcessStatus == $statusCode ? 'selected' : '' }}>
+                                        {{ $statusLabel }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="btn btn-success" id="update_process_status_btn">
+                                <i class="fa fa-check"></i> Update
+                            </button>
+                        </form>
+                        <div id="status_update_msg" style="display: none; margin-top: 5px; font-weight: 600;"></div>
+                    </div>
+                @endif
+            </div>
+        </div>
+
         <div class="row sameheight-container">
             <div class="block col-md-12">
                 {{-- <b>Prefix:</b>
@@ -360,6 +413,46 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
+                    }
+                });
+            });
+
+            $("#update_process_status_form").submit(function(e) {
+                e.preventDefault();
+                var form = $(this);
+                var btn = $("#update_process_status_btn");
+                var originalHtml = btn.html();
+                var msgDiv = $("#status_update_msg");
+                
+                btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Updating...');
+                msgDiv.hide();
+
+                $.ajax({
+                    url: form.attr('action'),
+                    method: 'POST',
+                    data: form.serialize(),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    success: function(response) {
+                        btn.prop('disabled', false).html(originalHtml);
+                        if (response.success) {
+                            var badge = $("#current_process_status_badge");
+                            badge.removeClass().addClass('badge ' + response.badge_class);
+                            badge.text(response.status_name);
+                            msgDiv.html('<span class="text-success"><i class="fa fa-check-circle"></i> ' + response.message + '</span>').fadeIn();
+                            setTimeout(function() {
+                                msgDiv.fadeOut();
+                            }, 4000);
+                        }
+                    },
+                    error: function(xhr) {
+                        btn.prop('disabled', false).html(originalHtml);
+                        var errorMsg = 'Failed to update process status.';
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMsg = xhr.responseJSON.message;
+                        }
+                        msgDiv.html('<span class="text-danger"><i class="fa fa-exclamation-circle"></i> ' + errorMsg + '</span>').fadeIn();
                     }
                 });
             });

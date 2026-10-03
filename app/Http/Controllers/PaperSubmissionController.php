@@ -15,6 +15,8 @@ use App\Interfaces\UserInterface;
 use App\Mail\AdminDecisionEmail;
 use App\Mail\PaperSubmissionCoAuthorEmail;
 use App\Mail\PaperSubmissionEmail;
+use App\Models\PaperSubmission;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -244,5 +246,31 @@ class PaperSubmissionController extends Controller
 	{
 		$this->paper_submission_interface->delete_paper($id);
 		return back();
+	}
+
+	public function update_process_status(Request $request)
+	{
+		if (!auth()->check() || auth()->user()->user_level != User::ADMIN) {
+			abort(403, 'Only Super Admin can update paper process status.');
+		}
+
+		$request->validate([
+			'paper_id' => 'required|exists:paper_submissions,id',
+			'process_status' => 'required|integer|in:' . implode(',', array_keys(PaperSubmission::PROCESS_STATUS)),
+		]);
+
+		$this->paper_submission_interface->update_process_status($request->paper_id, $request->process_status);
+
+		if ($request->ajax()) {
+			return response()->json([
+				'success' => true,
+				'message' => 'Process status updated successfully.',
+				'process_status' => $request->process_status,
+				'status_name' => PaperSubmission::PROCESS_STATUS[$request->process_status],
+				'badge_class' => PaperSubmission::PROCESS_STATUS_BADGES[$request->process_status] ?? 'badge-primary'
+			]);
+		}
+
+		return back()->with('success', 'Process status updated successfully.');
 	}
 }
